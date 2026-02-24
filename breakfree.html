@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BreakFree — AI Habit Recovery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #161b27;
+      --surface2: #1e2435;
+      --border: #2a3048;
+      --accent: #6b9fff;
+      --accent2: #a0c4ff;
+      --text: #e8edf8;
+      --muted: #7a8aaa;
+      --success: #6be8b0;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Background grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* Glow orb */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(107,159,255,0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 20px 60px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 0;
+    }
+
+    .logo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .calls-badge {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+
+    .calls-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      padding: 64px 0 48px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── FORM CARD ── */
+    .card {
+      width: 100%;
+      max-width: 700px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .card-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+
+    .card-sub {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 32px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input, select, textarea {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      padding: 12px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,77,109,0.12);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237070a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    select option { background: var(--surface2); }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* ── SUBMIT BUTTON ── */
+    .btn-primary {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,77,109,0.4);
+    }
+
+    .btn-primary:active:not(:disabled) { transform: translateY(0); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── LOADING ── */
+    .loading-screen {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      padding: 80px 20px;
+      display: none;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .loader {
+      width: 48px; height: 48px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      margin: 0 auto 28px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-screen h2 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .loading-screen p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── RESULTS ── */
+    .results-screen {
+      width: 100%;
+      max-width: 700px;
+      display: none;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .diagnosis-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 40px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .diagnosis-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .diagnosis-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .diagnosis-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .diagnosis-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Plan sections */
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 40px;
+      margin-bottom: 20px;
+    }
+
+    .plan-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .week-badge {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(107,159,255,0.12);
+      border: 1px solid rgba(107,159,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .week-info h3 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 2px;
+    }
+
+    .week-info span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .plan-content {
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    /* Lock In */
+    .lockin-card {
+      background: linear-gradient(135deg, rgba(107,159,255,0.08), rgba(160,196,255,0.04));
+      border: 1px solid rgba(107,159,255,0.25);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .lockin-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .lockin-card h2 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .commitment-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .lockin-input-row {
+      display: flex;
+      gap: 12px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .lockin-input-row input {
+      flex: 1;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .btn-lockin {
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-lockin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,77,109,0.4);
+    }
+
+    .locked-confirmation {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--success);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    /* Support chat */
+    .support-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 40px;
+      margin-bottom: 20px;
+    }
+
+    .support-card h3 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .support-card .card-sub { margin-bottom: 20px; }
+
+    .chat-messages {
+      min-height: 60px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .msg {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      max-width: 90%;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .msg.user {
+      background: rgba(107,159,255,0.12);
+      border: 1px solid rgba(107,159,255,0.2);
+      align-self: flex-end;
+      color: var(--text);
+    }
+
+    .msg.ai {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      color: var(--muted);
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input-row input { flex: 1; }
+
+    .btn-send {
+      padding: 12px 20px;
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-send:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(255,77,109,0.08);
+    }
+
+    .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .calls-warning {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+
+    /* Reset button */
+    .btn-reset {
+      display: block;
+      margin: 10px auto 0;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Error */
+    .error-msg {
+      background: rgba(255,77,109,0.1);
+      border: 1px solid rgba(255,77,109,0.3);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      color: var(--accent2);
+      margin-top: 16px;
+      display: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .card, .diagnosis-card, .plan-card, .lockin-card, .support-card {
+        padding: 28px 24px;
+      }
+      .form-grid { grid-template-columns: 1fr; }
+      .lockin-input-row { flex-direction: column; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo">Break<span>Free</span></div>
+    <div class="calls-badge" id="callsBadge">
+      <div class="dot"></div>
+      <span id="callsText">AI Ready</span>
+    </div>
+  </header>
+
+  <!-- ── INTAKE FORM ── -->
+  <section class="hero" id="heroSection">
+    <div class="hero-eyebrow">AI Habit Recovery</div>
+    <h1>Know your habit.<br/><em>Break it for good.</em></h1>
+    <p>Answer a few honest questions. Our AI will diagnose your habit and build a personalized 30-day recovery plan.</p>
+  </section>
+
+  <div class="card" id="formCard">
+    <div class="card-title">Tell us about your habit</div>
+    <div class="card-sub">Be honest — the more detail you give, the better your plan.</div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" id="name" placeholder="Your name" />
+      </div>
+
+      <div class="form-group">
+        <label>Age</label>
+        <select id="age">
+          <option value="" disabled selected>Select age</option>
+          <option>13</option><option>14</option><option>15</option>
+          <option>16</option><option>17</option><option>18</option>
+          <option>19+</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label>What is your biggest habit or addiction?</label>
+        <select id="habit">
+          <option value="" disabled selected>Choose one</option>
+          <option>Social media (Instagram, TikTok, Snapchat)</option>
+          <option>Gaming / video games</option>
+          <option>YouTube / streaming</option>
+          <option>My phone in general</option>
+          <option>Junk food / snacking</option>
+          <option>Vaping / nicotine</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group full" id="otherGroup" style="display:none;">
+        <label>Describe your habit</label>
+        <input type="text" id="habitOther" placeholder="e.g. I can't stop checking Reddit..." />
+      </div>
+
+      <div class="form-group">
+        <label>How long has this been going on?</label>
+        <select id="duration">
+          <option value="" disabled selected>Select duration</option>
+          <option>A few weeks</option>
+          <option>A few months</option>
+          <option>About a year</option>
+          <option>Multiple years</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>How often does it happen?</label>
+        <select id="frequency">
+          <option value="" disabled selected>Select frequency</option>
+          <option>A few times a week</option>
+          <option>Every day</option>
+          <option>Multiple times a day</option>
+          <option>Almost constantly</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label>What triggers it? (time of day, emotion, situation)</label>
+        <input type="text" id="trigger" placeholder="e.g. when I'm bored, right before bed, after school..." />
+      </div>
+
+      <div class="form-group full">
+        <label>How has it negatively affected your life?</label>
+        <textarea id="impact" placeholder="e.g. it's hurting my grades, I stay up too late, I feel anxious without it..."></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label>Have you tried to stop before? What happened?</label>
+        <input type="text" id="attempts" placeholder="e.g. I tried deleting the app but reinstalled it in a day..." />
+      </div>
+    </div>
+
+    <button class="btn-primary" id="submitBtn" onclick="handleSubmit()">
+      Generate My 30-Day Plan →
+    </button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <!-- ── LOADING ── -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+    <h2>Analyzing your habit...</h2>
+    <p>Building your personalized 30-day recovery plan. This will take just a moment.</p>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="results-screen" id="resultsScreen">
+
+    <div class="diagnosis-card" id="diagnosisCard">
+      <div class="diagnosis-label">Your Diagnosis</div>
+      <div class="diagnosis-title" id="diagnosisTitle">—</div>
+      <div class="diagnosis-text" id="diagnosisText">—</div>
+    </div>
+
+    <div class="plan-card" id="week1Card">
+      <div class="plan-header">
+        <div class="week-badge">W1</div>
+        <div class="week-info">
+          <h3 id="week1Title">Week 1</h3>
+          <span>Days 1–7</span>
+        </div>
+      </div>
+      <div class="plan-content" id="week1Content">—</div>
+    </div>
+
+    <div class="plan-card" id="week2Card">
+      <div class="plan-header">
+        <div class="week-badge">W2</div>
+        <div class="week-info">
+          <h3 id="week2Title">Week 2</h3>
+          <span>Days 8–14</span>
+        </div>
+      </div>
+      <div class="plan-content" id="week2Content">—</div>
+    </div>
+
+    <div class="plan-card" id="week3Card">
+      <div class="plan-header">
+        <div class="week-badge">W3</div>
+        <div class="week-info">
+          <h3 id="week3Title">Week 3</h3>
+          <span>Days 15–21</span>
+        </div>
+      </div>
+      <div class="plan-content" id="week3Content">—</div>
+    </div>
+
+    <div class="plan-card" id="week4Card">
+      <div class="plan-header">
+        <div class="week-badge">W4</div>
+        <div class="week-info">
+          <h3 id="week4Title">Week 4</h3>
+          <span>Days 22–30</span>
+        </div>
+      </div>
+      <div class="plan-content" id="week4Content">—</div>
+    </div>
+
+    <!-- Lock In -->
+    <div class="lockin-card" id="lockinCard">
+      <div class="lockin-icon">🔒</div>
+      <h2 id="lockinHeadline">Ready to lock in?</h2>
+      <div class="commitment-text" id="commitmentText">Loading your commitment statement...</div>
+      <div class="lockin-input-row">
+        <input type="text" id="lockinInput" placeholder='Type "I\'m in" to commit' />
+        <button class="btn-lockin" onclick="handleLockin()">Lock In</button>
+      </div>
+      <div class="locked-confirmation" id="lockedConfirmation">
+        ✓ &nbsp;You're locked in. Day 1 starts now.
+      </div>
+    </div>
+
+    <!-- Support Chat -->
+    <div class="support-card" id="supportCard" style="display:none;">
+      <h3>Need support?</h3>
+      <div class="card-sub">Ask anything about your plan or habit. <span id="supportCallsLeft"></span></div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Ask a question about your plan..." onkeydown="if(event.key==='Enter') sendChat()" />
+        <button class="btn-send" id="sendBtn" onclick="sendChat()">Send</button>
+      </div>
+      <div class="calls-warning" id="callsWarning" style="display:none;"></div>
+    </div>
+
+    <button class="btn-reset" onclick="resetApp()">Start Over</button>
+  </div>
+
+</div>
+
+<script>
+  // ── CONFIG ──
+  const PROXY_URL = 'https://us-central1-brophy-ai-api.cloudfunctions.net/brophyProxy';
+  const STUDENT_EMAIL = 'jselk27@brophybroncos.org';
+
+  // ── STATE ──
+  let callsRemaining = null;
+  let planContext = '';
+  let chatHistory = [];
+  let supportCallsUsed = 0;
+  const MAX_SUPPORT_CALLS = 1;
+
+  // ── HABIT OTHER TOGGLE ──
+  document.getElementById('habit').addEventListener('change', function() {
+    document.getElementById('otherGroup').style.display =
+      this.value === 'Other' ? 'flex' : 'none';
+  });
+
+  // ── CALL PROXY ──
+  async function callProxy(messages, system = '') {
+    const body = { messages };
+    if (system) body.system = system;
+
+    const res = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-student-email': STUDENT_EMAIL
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Error ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // Update call tracker
+    if (data._brophy) {
+      callsRemaining = data._brophy.callsRemaining;
+      updateCallsBadge();
+    }
+
+    return data.content[0].text;
+  }
+
+  function updateCallsBadge() {
+    if (callsRemaining === null) return;
+    const el = document.getElementById('callsText');
+    el.textContent = `${callsRemaining} calls left`;
+    if (callsRemaining <= 5) {
+      document.querySelector('.calls-badge .dot').style.background = '#ffaa4d';
+    }
+    if (callsRemaining <= 2) {
+      document.querySelector('.calls-badge .dot').style.background = 'var(--accent)';
+    }
+  }
+
+  // ── SUBMIT ──
+  async function handleSubmit() {
+    const name = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value;
+    const habitRaw = document.getElementById('habit').value;
+    const habitOther = document.getElementById('habitOther').value.trim();
+    const habit = habitRaw === 'Other' ? (habitOther || 'unspecified habit') : habitRaw;
+    const duration = document.getElementById('duration').value;
+    const frequency = document.getElementById('frequency').value;
+    const trigger = document.getElementById('trigger').value.trim();
+    const impact = document.getElementById('impact').value.trim();
+    const attempts = document.getElementById('attempts').value.trim();
+
+    if (!name || !age || !habitRaw || !duration || !frequency) {
+      showError('Please fill out all required fields before continuing.');
+      return;
+    }
+
+    // Show loading
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('loadingScreen').style.display = 'block';
+    document.getElementById('errorMsg').style.display = 'none';
+
+    const system = `You are BreakFree, an empathetic AI habit coach for teenagers. 
+You speak directly, honestly, and with warmth. You never lecture. You give real, actionable advice.
+Respond ONLY in the JSON format specified by the user. No extra text before or after the JSON.`;
+
+    const userPrompt = `
+Diagnose this teenager's habit and create a full 30-day recovery plan.
+
+USER PROFILE:
+- Name: ${name}
+- Age: ${age}
+- Habit: ${habit}
+- Duration: ${duration}
+- Frequency: ${frequency}
+- Triggers: ${trigger || 'not specified'}
+- Impact on life: ${impact || 'not specified'}
+- Previous attempts: ${attempts || 'none mentioned'}
+
+Return ONLY this JSON structure (no markdown, no code blocks, just raw JSON):
+{
+  "diagnosisTitle": "short punchy name for their addiction pattern (e.g. 'Dopamine Loop Dependency')",
+  "diagnosisText": "2-3 sentences explaining their specific habit pattern, why it hooks them, and what's really going on psychologically. Be direct and real.",
+  "commitmentStatement": "A powerful 2-sentence personal commitment statement written directly to ${name} about breaking this specific habit. Make it feel real and personal.",
+  "week1Title": "Week 1 theme name",
+  "week1Content": "5-7 specific daily actions for week 1 (awareness phase). Be concrete. Each on its own line starting with a bullet •",
+  "week2Title": "Week 2 theme name",
+  "week2Content": "5-7 specific daily actions for week 2 (reduction phase). Be concrete. Each on its own line starting with a bullet •",
+  "week3Title": "Week 3 theme name", 
+  "week3Content": "5-7 specific daily actions for week 3 (replacement phase). Be concrete. Each on its own line starting with a bullet •",
+  "week4Title": "Week 4 theme name",
+  "week4Content": "5-7 specific daily actions for week 4 (lock-in phase). Be concrete. Each on its own line starting with a bullet •"
+}`;
+
+    try {
+      const raw = await callProxy([{ role: 'user', content: userPrompt }], system);
+
+      // Parse JSON
+      let parsed;
+      try {
+        const cleaned = raw.replace(/```json|```/g, '').trim();
+        parsed = JSON.parse(cleaned);
+      } catch(e) {
+        throw new Error('Could not parse AI response. Please try again.');
+      }
+
+      // Store context for support chat
+      planContext = `User: ${name}, Age: ${age}, Habit: ${habit}. Their 30-day plan was generated with these themes: Week 1: ${parsed.week1Title}, Week 2: ${parsed.week2Title}, Week 3: ${parsed.week3Title}, Week 4: ${parsed.week4Title}.`;
+
+      // Populate results
+      document.getElementById('diagnosisTitle').textContent = parsed.diagnosisTitle || 'Your Habit Pattern';
+      document.getElementById('diagnosisText').textContent = parsed.diagnosisText || '';
+      document.getElementById('commitmentText').textContent = parsed.commitmentStatement || '';
+      document.getElementById('week1Title').textContent = parsed.week1Title || 'Week 1';
+      document.getElementById('week1Content').textContent = parsed.week1Content || '';
+      document.getElementById('week2Title').textContent = parsed.week2Title || 'Week 2';
+      document.getElementById('week2Content').textContent = parsed.week2Content || '';
+      document.getElementById('week3Title').textContent = parsed.week3Title || 'Week 3';
+      document.getElementById('week3Content').textContent = parsed.week3Content || '';
+      document.getElementById('week4Title').textContent = parsed.week4Title || 'Week 4';
+      document.getElementById('week4Content').textContent = parsed.week4Content || '';
+
+      // Show results
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('resultsScreen').style.display = 'block';
+
+    } catch(err) {
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('heroSection').style.display = 'block';
+      document.getElementById('formCard').style.display = 'block';
+      showError(err.message || 'Something went wrong. Please try again.');
+    }
+  }
+
+  // ── LOCK IN ──
+  function handleLockin() {
+    const val = document.getElementById('lockinInput').value.trim().toLowerCase();
+    if (val === "i'm in" || val === "im in" || val === "i'm in") {
+      document.getElementById('lockedConfirmation').style.display = 'flex';
+      document.getElementById('lockinInput').disabled = true;
+      document.querySelector('.btn-lockin').disabled = true;
+      document.getElementById('lockinInput').value = "I'm in ✓";
+
+      // Show support card after lock-in
+      setTimeout(() => {
+        document.getElementById('supportCard').style.display = 'block';
+        updateSupportCallsDisplay();
+        document.getElementById('supportCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 800);
+    } else {
+      document.getElementById('lockinInput').style.borderColor = 'var(--accent)';
+      document.getElementById('lockinInput').placeholder = 'Type exactly: I\'m in';
+      setTimeout(() => {
+        document.getElementById('lockinInput').style.borderColor = '';
+      }, 1200);
+    }
+  }
+
+  // ── SUPPORT CHAT ──
+  function updateSupportCallsDisplay() {
+    const remaining = MAX_SUPPORT_CALLS - supportCallsUsed;
+    document.getElementById('supportCallsLeft').textContent =
+      remaining > 0 ? `${remaining} support message${remaining === 1 ? '' : 's'} remaining.` : 'No support messages remaining.';
+
+    if (remaining <= 0) {
+      document.getElementById('chatInput').disabled = true;
+      document.getElementById('sendBtn').disabled = true;
+      document.getElementById('callsWarning').style.display = 'block';
+      document.getElementById('callsWarning').textContent = "You've used your support message. You've got this — trust your plan.";
+    }
+  }
+
+  async function sendChat() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    if (supportCallsUsed >= MAX_SUPPORT_CALLS) return;
+
+    input.value = '';
+    addMessage('user', msg);
+    document.getElementById('sendBtn').disabled = true;
+
+    chatHistory.push({ role: 'user', content: msg });
+
+    const system = `You are BreakFree, a supportive AI habit coach. 
+Context about this user: ${planContext}
+Keep responses short (3-5 sentences max), warm, direct, and actionable. No fluff.`;
+
+    try {
+      const reply = await callProxy(chatHistory, system);
+      chatHistory.push({ role: 'assistant', content: reply });
+      addMessage('ai', reply);
+      supportCallsUsed++;
+    } catch(err) {
+      addMessage('ai', 'Something went wrong. Please try again.');
+    } finally {
+      document.getElementById('sendBtn').disabled = false;
+      updateSupportCallsDisplay();
+    }
+  }
+
+  function addMessage(role, text) {
+    const el = document.createElement('div');
+    el.className = `msg ${role}`;
+    el.textContent = text;
+    document.getElementById('chatMessages').appendChild(el);
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── RESET ──
+  function resetApp() {
+    document.getElementById('resultsScreen').style.display = 'none';
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('formCard').style.display = 'block';
+    document.getElementById('lockedConfirmation').style.display = 'none';
+    document.getElementById('lockinInput').disabled = false;
+    document.getElementById('lockinInput').value = '';
+    document.querySelector('.btn-lockin').disabled = false;
+    document.getElementById('chatMessages').innerHTML = '';
+    document.getElementById('supportCard').style.display = 'none';
+    chatHistory = [];
+    supportCallsUsed = 0;
+    planContext = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+</script>
+</body>
+</html>
