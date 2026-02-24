@@ -873,7 +873,7 @@
 
     const system = `You are BreakFree, an empathetic AI habit coach for teenagers. 
 You speak directly, honestly, and with warmth. You never lecture. You give real, actionable advice.
-Respond ONLY in the JSON format specified by the user. No extra text before or after the JSON.`;
+CRITICAL: You must respond with ONLY a raw JSON object. No markdown, no code fences, no backticks, no explanation, no text before or after. Just the JSON object starting with { and ending with }.`;
 
     const userPrompt = `
 Diagnose this teenager's habit and create a full 30-day recovery plan.
@@ -906,13 +906,16 @@ Return ONLY this JSON structure (no markdown, no code blocks, just raw JSON):
     try {
       const raw = await callProxy([{ role: 'user', content: userPrompt }], system);
 
-      // Parse JSON
+      // Parse JSON — robust handling for messy AI responses
       let parsed;
       try {
-        const cleaned = raw.replace(/```json|```/g, '').trim();
+        let cleaned = raw.replace(/```json|```/gi, '').trim();
+        const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+        if (jsonMatch) cleaned = jsonMatch[0];
         parsed = JSON.parse(cleaned);
       } catch(e) {
-        throw new Error('Could not parse AI response. Please try again.');
+        console.error('JSON parse failed:', e, 'Raw:', raw);
+        throw new Error('The AI returned an unexpected response. Please try submitting again.');
       }
 
       // Store context for support chat
