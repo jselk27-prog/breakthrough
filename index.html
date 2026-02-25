@@ -1118,14 +1118,14 @@
     const system = `You are BreakFree, an empathetic AI habit coach for teenagers. ${tone}
 CRITICAL: Respond ONLY with a raw JSON object. No markdown, no backticks, no text before or after. Start with { end with }.`;
 
-    const prompt = `Diagnose this teenager's habit. Generate a 30-day plan.
+    const prompt = `Diagnose this teenager and give a 30-day habit plan.
 
-USER: Name: ${name}, Habit: ${habit}, Frequency: ${frequency}, Triggers: ${trigger}, Commitment: ${seriousness === 'high' ? 'tough' : 'gentle'}
+USER: Name:${name} Habit:${habit} Frequency:${frequency} Triggers:${trigger} Level:${seriousness}
 
-Return ONLY raw JSON, no markdown:
-{"diagnosisTitle":"3-4 word title","diagnosisText":"2 short sentences max.","commitmentStatement":"One sentence to ${name}.","week1Title":"theme","week2Title":"theme","week3Title":"theme","week4Title":"theme","goals":["g1","g2","g3","g4","g5","g6","g7","g8","g9","g10","g11","g12","g13","g14","g15","g16","g17","g18","g19","g20","g21","g22","g23","g24","g25","g26","g27","g28","g29","g30","g31","g32","g33","g34","g35","g36","g37","g38","g39","g40","g41","g42","g43","g44","g45","g46","g47","g48","g49","g50","g51","g52","g53","g54","g55","g56","g57","g58","g59","g60","g61","g62","g63","g64","g65","g66","g67","g68","g69","g70","g71","g72","g73","g74","g75","g76","g77","g78","g79","g80","g81","g82","g83","g84"]}
+Return ONLY raw JSON no markdown no backticks:
+{"diagnosisTitle":"3-4 words","diagnosisText":"2 sentences.","commitmentStatement":"1 sentence to ${name}.","week1Title":"W1 theme","week2Title":"W2 theme","week3Title":"W3 theme","week4Title":"W4 theme","w1":["a","b","c","d","e","f","g","h","i"],"w2":["a","b","c","d","e","f","g","h","i"],"w3":["a","b","c","d","e","f","g","h","i"],"w4":["a","b","c","d","e","f","g","h","i"]}
 
-goals = flat array of exactly 84 strings (28 days x 3 goals, skip weeks 29-30 they repeat week 4). Each goal MAX 6 WORDS. No punctuation inside strings. Goals progress harder each week.`;
+Each w1/w2/w3/w4 = exactly 9 strings (3 goals x 3 days, repeated across the week in code). Each string MAX 5 WORDS. No day labels. No punctuation inside strings. Example: "Leave phone outside bedroom" or "Delete TikTok today". Goals get harder w1 to w4.`;
 
     try {
       const raw    = await callProxy([{ role:'user', content: prompt }], system);
@@ -1214,25 +1214,33 @@ goals = flat array of exactly 84 strings (28 days x 3 goals, skip weeks 29-30 th
 
   function buildPlanDays(parsed) {
     const days = [];
-    const flat = parsed.goals || [];
-    const weekTitles = [
-      parsed.week1Title||'Week 1: Awareness',
-      parsed.week2Title||'Week 2: Reduction',
-      parsed.week3Title||'Week 3: Replacement',
-      parsed.week4Title||'Week 4: Lock-In',
+    const weeks = [
+      { num:1, title: parsed.week1Title||'Week 1', goals: parsed.w1||[] },
+      { num:2, title: parsed.week2Title||'Week 2', goals: parsed.w2||[] },
+      { num:3, title: parsed.week3Title||'Week 3', goals: parsed.w3||[] },
+      { num:4, title: parsed.week4Title||'Week 4', goals: parsed.w4||[] },
     ];
-    for (let i = 0; i < 30; i++) {
-      const weekIndex = Math.min(Math.floor(i / 7), 3);
-      const goalBase  = i * 3;
-      days.push({
-        weekNum:   weekIndex + 1,
-        weekTitle: weekTitles[weekIndex],
-        goals: [
-          flat[goalBase]   || 'Do one healthy thing today.',
-          flat[goalBase+1] || 'Reflect on your progress.',
-          flat[goalBase+2] || 'Be kind to yourself today.',
-        ]
-      });
+    // Strip any "DayX" prefixes the AI might add
+    function clean(s) { return (s||'').replace(/^Day\d+\s*/i,'').trim(); }
+    weeks.forEach(w => {
+      const g = w.goals.map(clean);
+      for (let d = 0; d < 7; d++) {
+        // Rotate through the 9 goals (3 sets of 3) across 7 days
+        const base = (d % 3) * 3;
+        days.push({
+          weekNum:   w.num,
+          weekTitle: w.title,
+          goals: [
+            g[base]   || 'Do one healthy thing today.',
+            g[base+1] || 'Reflect on your progress.',
+            g[base+2] || 'Be kind to yourself today.',
+          ]
+        });
+      }
+    });
+    // Add days 29-30 repeating last week
+    for (let d = 0; d < 2; d++) {
+      days.push({ ...days[27 + d] });
     }
     return days;
   }
