@@ -1179,18 +1179,49 @@ Each array = exactly 21 strings (7 days x 3 goals). Each goal: single short stri
 
   // ── PARSE JSON ──
   function parseJSON(raw) {
-    let c = raw.replace(/```json|```/gi,'').trim();
+    // Strip code fences
+    let c = raw.replace(/```json|```/gi, '').trim();
+    // Extract JSON object
     const m = c.match(/\{[\s\S]*\}/);
     if (m) c = m[0];
-    // Strip newlines inside string values
-    c = c.replace(/"([^"]*)"/g, (_,inner) => '"' + inner.replace(/[\r\n]+/g,' ').replace(/\s+/g,' ').trim() + '"');
-    try { return JSON.parse(c); } catch(e) {
-      let r = c.trimEnd();
+    // Nuclear option: replace ALL literal newlines/tabs inside JSON string values
+    // Walk char by char to sanitize only content inside quotes
+    let sanitized = '';
+    let inString = false;
+    let escaped = false;
+    for (let i = 0; i < c.length; i++) {
+      const ch = c[i];
+      if (escaped) {
+        sanitized += ch;
+        escaped = false;
+        continue;
+      }
+      if (ch === '\\') {
+        escaped = true;
+        sanitized += ch;
+        continue;
+      }
+      if (ch === '"') {
+        inString = !inString;
+        sanitized += ch;
+        continue;
+      }
+      if (inString && (ch === '\n' || ch === '\r' || ch === '\t')) {
+        sanitized += ' ';
+        continue;
+      }
+      sanitized += ch;
+    }
+    try { return JSON.parse(sanitized); } catch(e) {
+      // Last resort repair
+      let r = sanitized.trimEnd();
       if (!r.endsWith('}')) {
         if ((r.match(/"/g)||[]).length % 2 !== 0) r += '"';
         r += '\n}';
       }
-      return JSON.parse(r);
+      try { return JSON.parse(r); } catch(e2) {
+        throw new Error('The AI returned an unexpected response. Please try submitting again.');
+      }
     }
   }
 
