@@ -1118,14 +1118,14 @@
     const system = `You are BreakFree, an empathetic AI habit coach for teenagers. ${tone}
 CRITICAL: Respond ONLY with a raw JSON object. No markdown, no backticks, no text before or after. Start with { end with }.`;
 
-    const prompt = `Diagnose this teenager and give a 30-day habit plan.
+    const prompt = `Diagnose this teenager and give a habit recovery plan.
 
 USER: Name:${name} Habit:${habit} Frequency:${frequency} Triggers:${trigger} Level:${seriousness}
 
 Return ONLY raw JSON no markdown no backticks:
-{"diagnosisTitle":"3-4 words","diagnosisText":"2 sentences.","commitmentStatement":"1 sentence to ${name}.","week1Title":"W1 theme","week2Title":"W2 theme","week3Title":"W3 theme","week4Title":"W4 theme","w1":["a","b","c","d","e","f","g","h","i"],"w2":["a","b","c","d","e","f","g","h","i"],"w3":["a","b","c","d","e","f","g","h","i"],"w4":["a","b","c","d","e","f","g","h","i"]}
+{"diagnosisTitle":"3-4 words","diagnosisText":"2 sentences.","commitmentStatement":"1 sentence to ${name}.","week1Title":"W1 theme","week2Title":"W2 theme","week3Title":"W3 theme","week4Title":"W4 theme","w1":["a","b","c","d","e","f","g","h","i","j","k","l"],"w2":["a","b","c","d","e","f","g","h","i","j","k","l"],"w3":["a","b","c","d","e","f","g","h","i","j","k","l"],"w4":["a","b","c","d","e","f","g","h","i","j","k","l"]}
 
-Each w1/w2/w3/w4 = exactly 9 strings (3 goals x 3 days, repeated across the week in code). Each string MAX 5 WORDS. No day labels. No punctuation inside strings. Example: "Leave phone outside bedroom" or "Delete TikTok today". Goals get harder w1 to w4.`;
+Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day labels. No punctuation inside strings. All 12 must be different from each other. Example: "Leave phone outside bedroom" or "Delete TikTok today". Goals harder w1 to w4.`;
 
     try {
       const raw    = await callProxy([{ role:'user', content: prompt }], system);
@@ -1220,28 +1220,36 @@ Each w1/w2/w3/w4 = exactly 9 strings (3 goals x 3 days, repeated across the week
       { num:3, title: parsed.week3Title||'Week 3', goals: parsed.w3||[] },
       { num:4, title: parsed.week4Title||'Week 4', goals: parsed.w4||[] },
     ];
-    // Strip any "DayX" prefixes the AI might add
     function clean(s) { return (s||'').replace(/^Day\d+\s*/i,'').trim(); }
+
+    // Map 12 goals across 7 days — each day gets 3 different goals, no day repeats itself
+    // Day:  1    2    3    4    5    6    7
+    // G1:   0    3    6    9    1    4    7
+    // G2:   1    4    7   10    2    5    8
+    // G3:   2    5    8   11    3    6    9
+    const dayMap = [
+      [0,1,2], [3,4,5], [6,7,8], [9,10,11],
+      [1,2,3], [4,5,6], [7,8,9]
+    ];
+
     weeks.forEach(w => {
       const g = w.goals.map(clean);
+      // Pad to 12 with fallbacks just in case
+      while (g.length < 12) g.push('Keep going today.');
       for (let d = 0; d < 7; d++) {
-        // Rotate through the 9 goals (3 sets of 3) across 7 days
-        const base = (d % 3) * 3;
+        const [i1, i2, i3] = dayMap[d];
         days.push({
           weekNum:   w.num,
           weekTitle: w.title,
-          goals: [
-            g[base]   || 'Do one healthy thing today.',
-            g[base+1] || 'Reflect on your progress.',
-            g[base+2] || 'Be kind to yourself today.',
-          ]
+          goals: [ g[i1], g[i2], g[i3] ]
         });
       }
     });
-    // Add days 29-30 repeating last week
-    for (let d = 0; d < 2; d++) {
-      days.push({ ...days[27 + d] });
-    }
+
+    // Days 29-30: use last week goals with a different dayMap offset
+    days.push({ weekNum:4, weekTitle: weeks[3].title, goals: [ weeks[3].goals.map(clean)[2]||'Stay strong today.', weeks[3].goals.map(clean)[5]||'Keep pushing.', weeks[3].goals.map(clean)[10]||'Finish strong.' ] });
+    days.push({ weekNum:4, weekTitle: weeks[3].title, goals: [ weeks[3].goals.map(clean)[0]||'Final push today.', weeks[3].goals.map(clean)[7]||'You made it far.', weeks[3].goals.map(clean)[11]||'One more day.' ] });
+
     return days;
   }
 
