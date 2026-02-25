@@ -807,7 +807,7 @@
 
   // ── CALL PROXY ──
   async function callProxy(messages, system = '') {
-    const body = { messages };
+    const body = { messages, max_tokens: 1500 };
     if (system) body.system = system;
 
     const res = await fetch(PROXY_URL, {
@@ -891,16 +891,16 @@ USER PROFILE:
 Return ONLY this JSON structure (no markdown, no code blocks, just raw JSON):
 {
   "diagnosisTitle": "short punchy name for their addiction pattern (e.g. 'Dopamine Loop Dependency')",
-  "diagnosisText": "2-3 sentences explaining their specific habit pattern, why it hooks them, and what's really going on psychologically. Be direct and real.",
-  "commitmentStatement": "A powerful 2-sentence personal commitment statement written directly to ${name} about breaking this specific habit. Make it feel real and personal.",
+  "diagnosisText": "2 sentences max explaining their habit pattern and what's really going on. Be direct.",
+  "commitmentStatement": "One powerful sentence commitment written directly to ${name} about breaking this specific habit. Make it feel real and personal.",
   "week1Title": "Week 1 theme name",
-  "week1Content": "5-7 specific daily actions for week 1 (awareness phase). Be concrete. Each on its own line starting with a bullet •",
+  "week1Content": "4 specific daily actions for week 1 (awareness phase). Be concrete and brief. Each on its own line starting with a bullet •",
   "week2Title": "Week 2 theme name",
-  "week2Content": "5-7 specific daily actions for week 2 (reduction phase). Be concrete. Each on its own line starting with a bullet •",
+  "week2Content": "4 specific daily actions for week 2 (reduction phase). Be concrete and brief. Each on its own line starting with a bullet •",
   "week3Title": "Week 3 theme name", 
-  "week3Content": "5-7 specific daily actions for week 3 (replacement phase). Be concrete. Each on its own line starting with a bullet •",
+  "week3Content": "4 specific daily actions for week 3 (replacement phase). Be concrete and brief. Each on its own line starting with a bullet •",
   "week4Title": "Week 4 theme name",
-  "week4Content": "5-7 specific daily actions for week 4 (lock-in phase). Be concrete. Each on its own line starting with a bullet •"
+  "week4Content": "4 specific daily actions for week 4 (lock-in phase). Be concrete and brief. Each on its own line starting with a bullet •"
 }`;
 
     try {
@@ -910,12 +910,26 @@ Return ONLY this JSON structure (no markdown, no code blocks, just raw JSON):
       let parsed;
       try {
         let cleaned = raw.replace(/```json|```/gi, '').trim();
+        // Extract just the JSON object
         const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
         if (jsonMatch) cleaned = jsonMatch[0];
-        parsed = JSON.parse(cleaned);
+        // Try to repair truncated JSON by closing open strings/objects
+        try {
+          parsed = JSON.parse(cleaned);
+        } catch(e1) {
+          // Attempt repair: close any open string and object
+          let repaired = cleaned.trimEnd();
+          if (!repaired.endsWith('}')) {
+            // Close open string if needed
+            const quoteCount = (repaired.match(/(?<!\\)"/g) || []).length;
+            if (quoteCount % 2 !== 0) repaired += '"';
+            repaired += '\n}';
+          }
+          parsed = JSON.parse(repaired);
+        }
       } catch(e) {
         console.error('JSON parse failed:', e, 'Raw:', raw);
-        throw new Error('The AI returned an unexpected response. Please try submitting again.');
+        throw new Error('The AI response was cut off. Please try submitting again — it usually works on the second try.');
       }
 
       // Store context for support chat
