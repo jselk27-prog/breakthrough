@@ -1220,6 +1220,8 @@ Each array = exactly 21 strings (7 days x 3 goals). Each goal: single short stri
         r += '\n}';
       }
       try { return JSON.parse(r); } catch(e2) {
+        console.error('FULL RAW RESPONSE:', raw);
+        console.error('SANITIZED:', sanitized);
         throw new Error('The AI returned an unexpected response. Please try submitting again.');
       }
     }
