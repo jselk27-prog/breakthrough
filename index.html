@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BreakFree — AI Habit Recovery</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
@@ -18,10 +18,11 @@
       --text: #e8edf8;
       --muted: #7a8aaa;
       --success: #6be8b0;
+      --gold: #ffd166;
     }
 
     html, body {
-      height: 100%;
+      min-height: 100%;
       background: var(--bg);
       color: var(--text);
       font-family: 'Nunito', sans-serif;
@@ -30,18 +31,6 @@
       overflow-x: hidden;
     }
 
-    /* Background grain */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
-    }
-
-    /* Glow orb */
     body::after {
       content: '';
       position: fixed;
@@ -62,11 +51,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 0 20px 60px;
+      padding: 0 20px 80px;
     }
 
-    /* ── HEADER ── */
     header {
       width: 100%;
       max-width: 700px;
@@ -76,14 +63,23 @@
       padding: 28px 0 0;
     }
 
-    .logo {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1.4rem;
-      letter-spacing: -0.03em;
-    }
-
+    .logo { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; }
     .logo span { color: var(--accent); }
+
+    .header-right { display: flex; align-items: center; gap: 10px; }
+
+    .points-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      background: rgba(255,209,102,0.1);
+      border: 1px solid rgba(255,209,102,0.25);
+      padding: 5px 14px;
+      border-radius: 999px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
 
     .calls-badge {
       font-size: 0.75rem;
@@ -95,7 +91,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.3s;
     }
 
     .calls-badge .dot {
@@ -105,12 +100,8 @@
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    /* ── HERO ── */
     .hero {
       width: 100%;
       max-width: 700px;
@@ -121,7 +112,7 @@
 
     .hero-eyebrow {
       font-size: 0.7rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
@@ -131,26 +122,15 @@
     .hero h1 {
       font-family: 'Nunito', sans-serif;
       font-weight: 800;
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
       margin-bottom: 20px;
     }
 
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto; }
 
-    .hero p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      font-weight: 300;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    /* ── FORM CARD ── */
     .card {
       width: 100%;
       max-width: 700px;
@@ -161,36 +141,16 @@
       animation: fadeUp 0.7s 0.15s ease both;
     }
 
-    .card-title {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      margin-bottom: 6px;
-    }
+    .card-title { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 6px; }
+    .card-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 32px; }
 
-    .card-sub {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-bottom: 32px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
     .form-group.full { grid-column: 1 / -1; }
 
     label {
       font-size: 0.78rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--muted);
@@ -214,11 +174,11 @@
 
     input:focus, select:focus, textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(255,77,109,0.12);
+      box-shadow: 0 0 0 3px rgba(107,159,255,0.12);
     }
 
     select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237070a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       padding-right: 36px;
@@ -226,10 +186,34 @@
     }
 
     select option { background: var(--surface2); }
-
     textarea { resize: vertical; min-height: 80px; }
 
-    /* ── SUBMIT BUTTON ── */
+    /* Seriousness toggle */
+    .seriousness-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .serious-option { display: none; }
+
+    .serious-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 18px 12px;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+    }
+
+    .serious-label:hover { border-color: var(--accent); background: rgba(107,159,255,0.06); }
+    .serious-option:checked + .serious-label { border-color: var(--accent); background: rgba(107,159,255,0.1); }
+
+    .serious-emoji { font-size: 1.6rem; }
+    .serious-title { font-weight: 700; font-size: 0.95rem; }
+    .serious-desc { font-size: 0.78rem; color: var(--muted); }
+
     .btn-primary {
       width: 100%;
       margin-top: 28px;
@@ -239,31 +223,15 @@
       border: none;
       border-radius: 12px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 1rem;
-      letter-spacing: 0.02em;
       cursor: pointer;
       transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-      position: relative;
-      overflow: hidden;
     }
 
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255,77,109,0.4);
-    }
-
-    .btn-primary:active:not(:disabled) { transform: translateY(0); }
+    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(107,159,255,0.35); }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* ── LOADING ── */
     .loading-screen {
       width: 100%;
       max-width: 700px;
@@ -284,22 +252,10 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .loading-screen h2 {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-    }
-
+    .loading-screen h2 { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: 10px; }
     .loading-screen p { color: var(--muted); font-size: 0.9rem; }
 
-    /* ── RESULTS ── */
-    .results-screen {
-      width: 100%;
-      max-width: 700px;
-      display: none;
-      animation: fadeUp 0.6s ease both;
-    }
+    .results-screen { width: 100%; max-width: 700px; display: none; animation: fadeUp 0.6s ease both; }
 
     .diagnosis-card {
       background: var(--surface);
@@ -319,31 +275,31 @@
       background: linear-gradient(90deg, var(--accent), var(--accent2));
     }
 
-    .diagnosis-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
+    .diagnosis-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .diagnosis-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .diagnosis-text { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* Points card */
+    .points-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,209,102,0.2);
+      border-radius: 20px;
+      padding: 28px 40px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .diagnosis-title {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1.8rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 14px;
-    }
+    .points-card-info h3 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 3px; }
+    .points-card-info p { font-size: 0.82rem; color: var(--muted); }
 
-    .diagnosis-text {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
+    .points-big { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 2.8rem; color: var(--gold); line-height: 1; text-align: right; }
+    .points-big span { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); }
 
-    /* Plan sections */
-    .plan-card {
+    /* Daily card */
+    .daily-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -351,48 +307,77 @@
       margin-bottom: 20px;
     }
 
-    .plan-header {
+    .daily-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 16px; }
+    .daily-meta { display: flex; flex-direction: column; gap: 4px; }
+
+    .week-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+    .day-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; }
+
+    .day-points-today { text-align: right; flex-shrink: 0; }
+    .day-points-today .pts-num { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--gold); line-height: 1; }
+    .day-points-today .pts-label { font-size: 0.72rem; color: var(--muted); display: block; }
+
+    .goals-list { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+    .goal-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 14px;
-      margin-bottom: 20px;
+      padding: 16px 18px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
     }
 
-    .week-badge {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: rgba(107,159,255,0.12);
-      border: 1px solid rgba(107,159,255,0.25);
+    .goal-item:hover { border-color: var(--accent); }
+    .goal-item.completed { background: rgba(107,159,255,0.07); border-color: rgba(107,159,255,0.3); }
+
+    .goal-checkbox {
+      width: 22px; height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: var(--accent);
-      flex-shrink: 0;
+      margin-top: 1px;
+      transition: all 0.2s;
+      font-size: 0.8rem;
     }
 
-    .week-info h3 {
+    .goal-item.completed .goal-checkbox { background: var(--accent); border-color: var(--accent); }
+    .goal-text { font-size: 0.95rem; line-height: 1.5; color: var(--text); transition: color 0.2s; flex: 1; }
+    .goal-item.completed .goal-text { color: var(--muted); text-decoration: line-through; }
+
+    .goal-points { flex-shrink: 0; font-size: 0.78rem; font-weight: 700; color: var(--gold); opacity: 0; transition: opacity 0.3s; }
+    .goal-item.completed .goal-points { opacity: 1; }
+
+    .day-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; gap: 12px; }
+
+    .btn-nav {
+      padding: 12px 24px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
       font-family: 'Nunito', sans-serif;
       font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 2px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
     }
 
-    .week-info span {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .btn-nav:hover:not(:disabled) { border-color: var(--accent); background: rgba(107,159,255,0.08); }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    .plan-content {
-      color: var(--muted);
-      font-size: 0.93rem;
-      line-height: 1.8;
-      white-space: pre-wrap;
-    }
+    .day-progress { font-size: 0.82rem; color: var(--muted); text-align: center; }
+    .progress-bar-wrap { height: 4px; background: var(--border); border-radius: 999px; margin-top: 6px; width: 120px; }
+    .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.4s ease; }
 
-    /* Lock In */
+    /* Lock in */
     .lockin-card {
       background: linear-gradient(135deg, rgba(107,159,255,0.08), rgba(160,196,255,0.04));
       border: 1px solid rgba(107,159,255,0.25);
@@ -402,38 +387,12 @@
       text-align: center;
     }
 
-    .lockin-icon {
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-    }
+    .lockin-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .lockin-card h2 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 12px; }
+    .commitment-text { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 28px; font-style: italic; }
 
-    .lockin-card h2 {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-    }
-
-    .commitment-text {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      margin-bottom: 28px;
-      font-style: italic;
-    }
-
-    .lockin-input-row {
-      display: flex;
-      gap: 12px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .lockin-input-row input {
-      flex: 1;
-      text-align: center;
-      font-weight: 500;
-    }
+    .lockin-input-row { display: flex; gap: 12px; max-width: 400px; margin: 0 auto; }
+    .lockin-input-row input { flex: 1; text-align: center; font-weight: 600; }
 
     .btn-lockin {
       padding: 12px 24px;
@@ -442,17 +401,14 @@
       border: none;
       border-radius: 10px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.9rem;
       cursor: pointer;
       white-space: nowrap;
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
-    .btn-lockin:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255,77,109,0.4);
-    }
+    .btn-lockin:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,159,255,0.35); }
 
     .locked-confirmation {
       display: none;
@@ -467,60 +423,17 @@
       animation: fadeUp 0.4s ease both;
     }
 
-    /* Support chat */
-    .support-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 40px;
-      margin-bottom: 20px;
-    }
+    /* Support */
+    .support-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 40px; margin-bottom: 20px; display: none; }
+    .support-card h3 { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
 
-    .support-card h3 {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-    }
+    .chat-messages { min-height: 40px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
 
-    .support-card .card-sub { margin-bottom: 20px; }
+    .msg { padding: 12px 16px; border-radius: 12px; font-size: 0.92rem; line-height: 1.6; max-width: 90%; animation: fadeUp 0.3s ease both; }
+    .msg.user { background: rgba(107,159,255,0.12); border: 1px solid rgba(107,159,255,0.2); align-self: flex-end; }
+    .msg.ai { background: var(--surface2); border: 1px solid var(--border); align-self: flex-start; color: var(--muted); }
 
-    .chat-messages {
-      min-height: 60px;
-      margin-bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .msg {
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 0.92rem;
-      line-height: 1.6;
-      max-width: 90%;
-      animation: fadeUp 0.3s ease both;
-    }
-
-    .msg.user {
-      background: rgba(107,159,255,0.12);
-      border: 1px solid rgba(107,159,255,0.2);
-      align-self: flex-end;
-      color: var(--text);
-    }
-
-    .msg.ai {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      align-self: flex-start;
-      color: var(--muted);
-    }
-
-    .chat-input-row {
-      display: flex;
-      gap: 10px;
-    }
-
+    .chat-input-row { display: flex; gap: 10px; }
     .chat-input-row input { flex: 1; }
 
     .btn-send {
@@ -530,28 +443,17 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
       white-space: nowrap;
     }
 
-    .btn-send:hover:not(:disabled) {
-      border-color: var(--accent);
-      background: rgba(255,77,109,0.08);
-    }
-
+    .btn-send:hover:not(:disabled) { border-color: var(--accent); background: rgba(107,159,255,0.08); }
     .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+    .calls-warning { text-align: center; font-size: 0.8rem; color: var(--accent); margin-top: 8px; display: none; }
 
-    .calls-warning {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--accent);
-      margin-top: 8px;
-    }
-
-    /* Reset button */
     .btn-reset {
       display: block;
       margin: 10px auto 0;
@@ -568,30 +470,28 @@
 
     .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Error */
     .error-msg {
-      background: rgba(255,77,109,0.1);
-      border: 1px solid rgba(255,77,109,0.3);
+      background: rgba(255,100,100,0.1);
+      border: 1px solid rgba(255,100,100,0.3);
       border-radius: 10px;
       padding: 14px 18px;
       font-size: 0.88rem;
-      color: var(--accent2);
+      color: #ff9a9a;
       margin-top: 16px;
       display: none;
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes pointsPop { 0%{transform:scale(1)} 50%{transform:scale(1.2)} 100%{transform:scale(1)} }
+    .pop { animation: pointsPop 0.35s ease; }
 
     @media (max-width: 600px) {
-      .card, .diagnosis-card, .plan-card, .lockin-card, .support-card {
-        padding: 28px 24px;
-      }
+      .card, .diagnosis-card, .daily-card, .lockin-card, .support-card, .points-card { padding: 24px 20px; }
       .form-grid { grid-template-columns: 1fr; }
       .lockin-input-row { flex-direction: column; }
-      .hero h1 { font-size: 2.2rem; }
+      .hero h1 { font-size: 2.1rem; }
+      .seriousness-group { grid-template-columns: 1fr; }
+      .day-nav { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -600,17 +500,20 @@
 
   <header>
     <div class="logo">Break<span>Free</span></div>
-    <div class="calls-badge" id="callsBadge">
-      <div class="dot"></div>
-      <span id="callsText">AI Ready</span>
+    <div class="header-right">
+      <div class="points-badge" id="pointsBadge">⭐ <span id="headerPoints">0</span> pts</div>
+      <div class="calls-badge">
+        <div class="dot"></div>
+        <span id="callsText">AI Ready</span>
+      </div>
     </div>
   </header>
 
-  <!-- ── INTAKE FORM ── -->
+  <!-- FORM -->
   <section class="hero" id="heroSection">
     <div class="hero-eyebrow">AI Habit Recovery</div>
     <h1>Know your habit.<br/><em>Break it for good.</em></h1>
-    <p>Answer a few honest questions. Our AI will diagnose your habit and build a personalized 30-day recovery plan.</p>
+    <p>Answer a few honest questions. The AI will diagnose your habit and build a personalized 30-day plan — one day at a time.</p>
   </section>
 
   <div class="card" id="formCard">
@@ -620,19 +523,15 @@
     <div class="form-grid">
       <div class="form-group">
         <label>First Name</label>
-        <input type="text" id="name" placeholder="Your name" />
+        <input type="text" id="name" placeholder="Your name"/>
       </div>
-
       <div class="form-group">
         <label>Age</label>
         <select id="age">
           <option value="" disabled selected>Select age</option>
-          <option>13</option><option>14</option><option>15</option>
-          <option>16</option><option>17</option><option>18</option>
-          <option>19+</option>
+          <option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19+</option>
         </select>
       </div>
-
       <div class="form-group full">
         <label>What is your biggest habit or addiction?</label>
         <select id="habit">
@@ -646,381 +545,449 @@
           <option>Other</option>
         </select>
       </div>
-
       <div class="form-group full" id="otherGroup" style="display:none;">
         <label>Describe your habit</label>
-        <input type="text" id="habitOther" placeholder="e.g. I can't stop checking Reddit..." />
+        <input type="text" id="habitOther" placeholder="e.g. I can't stop checking Reddit..."/>
       </div>
-
       <div class="form-group">
         <label>How long has this been going on?</label>
         <select id="duration">
           <option value="" disabled selected>Select duration</option>
-          <option>A few weeks</option>
-          <option>A few months</option>
-          <option>About a year</option>
-          <option>Multiple years</option>
+          <option>A few weeks</option><option>A few months</option><option>About a year</option><option>Multiple years</option>
         </select>
       </div>
-
       <div class="form-group">
         <label>How often does it happen?</label>
         <select id="frequency">
           <option value="" disabled selected>Select frequency</option>
-          <option>A few times a week</option>
-          <option>Every day</option>
-          <option>Multiple times a day</option>
-          <option>Almost constantly</option>
+          <option>A few times a week</option><option>Every day</option><option>Multiple times a day</option><option>Almost constantly</option>
         </select>
       </div>
-
       <div class="form-group full">
-        <label>What triggers it? (time of day, emotion, situation)</label>
-        <input type="text" id="trigger" placeholder="e.g. when I'm bored, right before bed, after school..." />
+        <label>What triggers it?</label>
+        <input type="text" id="trigger" placeholder="e.g. when I'm bored, right before bed, after school..."/>
       </div>
-
       <div class="form-group full">
         <label>How has it negatively affected your life?</label>
         <textarea id="impact" placeholder="e.g. it's hurting my grades, I stay up too late, I feel anxious without it..."></textarea>
       </div>
-
       <div class="form-group full">
-        <label>Have you tried to stop before? What happened?</label>
-        <input type="text" id="attempts" placeholder="e.g. I tried deleting the app but reinstalled it in a day..." />
+        <label>Have you tried to stop before?</label>
+        <input type="text" id="attempts" placeholder="e.g. I tried deleting the app but reinstalled it in a day..."/>
+      </div>
+      <div class="form-group full">
+        <label>How serious are you about breaking this habit?</label>
+        <div class="seriousness-group">
+          <input type="radio" name="seriousness" id="seriousHigh" value="high" class="serious-option"/>
+          <label for="seriousHigh" class="serious-label">
+            <span class="serious-emoji">🔥</span>
+            <span class="serious-title">I'm fully committed</span>
+            <span class="serious-desc">I want a challenging, no-excuses plan</span>
+          </label>
+          <input type="radio" name="seriousness" id="seriousLow" value="low" class="serious-option"/>
+          <label for="seriousLow" class="serious-label">
+            <span class="serious-emoji">🌱</span>
+            <span class="serious-title">Taking it step by step</span>
+            <span class="serious-desc">I want a gentle, easygoing plan to start</span>
+          </label>
+        </div>
       </div>
     </div>
 
-    <button class="btn-primary" id="submitBtn" onclick="handleSubmit()">
-      Generate My 30-Day Plan →
-    </button>
+    <button class="btn-primary" onclick="handleSubmit()">Generate My 30-Day Plan →</button>
     <div class="error-msg" id="errorMsg"></div>
   </div>
 
-  <!-- ── LOADING ── -->
+  <!-- LOADING -->
   <div class="loading-screen" id="loadingScreen">
     <div class="loader"></div>
-    <h2>Analyzing your habit...</h2>
-    <p>Building your personalized 30-day recovery plan. This will take just a moment.</p>
+    <h2>Building your plan...</h2>
+    <p>The AI is personalizing your 30-day recovery journey. Just a moment.</p>
   </div>
 
-  <!-- ── RESULTS ── -->
+  <!-- RESULTS -->
   <div class="results-screen" id="resultsScreen">
 
-    <div class="diagnosis-card" id="diagnosisCard">
+    <div class="diagnosis-card">
       <div class="diagnosis-label">Your Diagnosis</div>
       <div class="diagnosis-title" id="diagnosisTitle">—</div>
       <div class="diagnosis-text" id="diagnosisText">—</div>
     </div>
 
-    <div class="plan-card" id="week1Card">
-      <div class="plan-header">
-        <div class="week-badge">W1</div>
-        <div class="week-info">
-          <h3 id="week1Title">Week 1</h3>
-          <span>Days 1–7</span>
-        </div>
+    <div class="points-card">
+      <div class="points-card-info">
+        <h3>Your Points</h3>
+        <p>5 pts per goal · 15 pts max per day · progress saves automatically</p>
       </div>
-      <div class="plan-content" id="week1Content">—</div>
+      <div class="points-big" id="totalPointsDisplay">0<span>total points</span></div>
     </div>
 
-    <div class="plan-card" id="week2Card">
-      <div class="plan-header">
-        <div class="week-badge">W2</div>
-        <div class="week-info">
-          <h3 id="week2Title">Week 2</h3>
-          <span>Days 8–14</span>
+    <div class="daily-card">
+      <div class="daily-header">
+        <div class="daily-meta">
+          <div class="week-tag" id="weekTag">Week 1</div>
+          <div class="day-title" id="dayTitle">Day 1</div>
+        </div>
+        <div class="day-points-today">
+          <div class="pts-num" id="todayPointsNum">0</div>
+          <span class="pts-label">today's pts</span>
         </div>
       </div>
-      <div class="plan-content" id="week2Content">—</div>
-    </div>
 
-    <div class="plan-card" id="week3Card">
-      <div class="plan-header">
-        <div class="week-badge">W3</div>
-        <div class="week-info">
-          <h3 id="week3Title">Week 3</h3>
-          <span>Days 15–21</span>
+      <div class="goals-list" id="goalsList"></div>
+
+      <div class="day-nav">
+        <button class="btn-nav" id="prevBtn" onclick="changeDay(-1)" disabled>← Prev Day</button>
+        <div class="day-progress">
+          <div id="dayProgressText">Day 1 of 30</div>
+          <div class="progress-bar-wrap" style="margin:6px auto 0">
+            <div class="progress-bar-fill" id="progressFill" style="width:3.3%"></div>
+          </div>
         </div>
+        <button class="btn-nav" id="nextBtn" onclick="changeDay(1)">Next Day →</button>
       </div>
-      <div class="plan-content" id="week3Content">—</div>
     </div>
 
-    <div class="plan-card" id="week4Card">
-      <div class="plan-header">
-        <div class="week-badge">W4</div>
-        <div class="week-info">
-          <h3 id="week4Title">Week 4</h3>
-          <span>Days 22–30</span>
-        </div>
-      </div>
-      <div class="plan-content" id="week4Content">—</div>
-    </div>
-
-    <!-- Lock In -->
-    <div class="lockin-card" id="lockinCard">
+    <div class="lockin-card">
       <div class="lockin-icon">🔒</div>
-      <h2 id="lockinHeadline">Ready to lock in?</h2>
-      <div class="commitment-text" id="commitmentText">Loading your commitment statement...</div>
+      <h2>Ready to lock in?</h2>
+      <div class="commitment-text" id="commitmentText">Loading...</div>
       <div class="lockin-input-row">
-        <input type="text" id="lockinInput" placeholder='Type "I\'m in" to commit' />
+        <input type="text" id="lockinInput" placeholder="Type &quot;I'm in&quot; to commit"/>
         <button class="btn-lockin" onclick="handleLockin()">Lock In</button>
       </div>
-      <div class="locked-confirmation" id="lockedConfirmation">
-        ✓ &nbsp;You're locked in. Day 1 starts now.
-      </div>
+      <div class="locked-confirmation" id="lockedConfirmation">✓ &nbsp;You're locked in. Day 1 starts now.</div>
     </div>
 
-    <!-- Support Chat -->
-    <div class="support-card" id="supportCard" style="display:none;">
+    <div class="support-card" id="supportCard">
       <h3>Need support?</h3>
-      <div class="card-sub">Ask anything about your plan or habit. <span id="supportCallsLeft"></span></div>
+      <div class="card-sub" style="margin-bottom:16px;">Ask anything about your plan. <span id="supportCallsLeft"></span></div>
       <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-input-row">
-        <input type="text" id="chatInput" placeholder="Ask a question about your plan..." onkeydown="if(event.key==='Enter') sendChat()" />
+        <input type="text" id="chatInput" placeholder="Ask a question about your plan..." onkeydown="if(event.key==='Enter') sendChat()"/>
         <button class="btn-send" id="sendBtn" onclick="sendChat()">Send</button>
       </div>
-      <div class="calls-warning" id="callsWarning" style="display:none;"></div>
+      <div class="calls-warning" id="callsWarning"></div>
     </div>
 
     <button class="btn-reset" onclick="resetApp()">Start Over</button>
   </div>
 
 </div>
-
 <script>
-  // ── CONFIG ──
-  const PROXY_URL = 'https://us-central1-brophy-ai-api.cloudfunctions.net/brophyProxy';
+  const PROXY_URL     = 'https://us-central1-brophy-ai-api.cloudfunctions.net/brophyProxy';
   const STUDENT_EMAIL = 'jselk27@brophybroncos.org';
+  const STORAGE_KEY   = 'breakfree_v2';
 
-  // ── STATE ──
-  let callsRemaining = null;
+  let planDays = [];
+  let progress = { currentDay: 0, totalPoints: 0, dayData: {} };
   let planContext = '';
   let chatHistory = [];
   let supportCallsUsed = 0;
   const MAX_SUPPORT_CALLS = 1;
 
-  // ── HABIT OTHER TOGGLE ──
+  // ── LOAD SAVED ──
+  function loadSaved() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const d = JSON.parse(saved);
+      if (!d.planDays || d.planDays.length !== 30) return;
+      planDays   = d.planDays;
+      progress   = d.progress || { currentDay: 0, totalPoints: 0, dayData: {} };
+      planContext = d.planContext || '';
+      document.getElementById('heroSection').style.display = 'none';
+      document.getElementById('formCard').style.display    = 'none';
+      document.getElementById('resultsScreen').style.display = 'block';
+      document.getElementById('diagnosisTitle').textContent = d.diagnosisTitle || '';
+      document.getElementById('diagnosisText').textContent  = d.diagnosisText  || '';
+      document.getElementById('commitmentText').textContent = d.commitmentStatement || '';
+      document.getElementById('lockedConfirmation').style.display = 'flex';
+      document.getElementById('lockinInput').disabled = true;
+      document.getElementById('lockinInput').value    = "I'm in ✓";
+      document.querySelector('.btn-lockin').disabled  = true;
+      document.getElementById('supportCard').style.display = 'block';
+      document.getElementById('pointsBadge').style.display = 'flex';
+      updateSupportCallsDisplay();
+      renderDay(progress.currentDay);
+      updatePointsUI();
+    } catch(e) { console.log('No saved data'); }
+  }
+
+  function saveProgress() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        planDays, progress, planContext,
+        diagnosisTitle:       document.getElementById('diagnosisTitle').textContent,
+        diagnosisText:        document.getElementById('diagnosisText').textContent,
+        commitmentStatement:  document.getElementById('commitmentText').textContent,
+      }));
+    } catch(e) {}
+  }
+
   document.getElementById('habit').addEventListener('change', function() {
-    document.getElementById('otherGroup').style.display =
-      this.value === 'Other' ? 'flex' : 'none';
+    document.getElementById('otherGroup').style.display = this.value === 'Other' ? 'flex' : 'none';
   });
 
-  // ── CALL PROXY ──
+  // ── PROXY ──
   async function callProxy(messages, system = '') {
     const body = { messages, max_tokens: 1500 };
     if (system) body.system = system;
-
     const res = await fetch(PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-student-email': STUDENT_EMAIL
-      },
+      headers: { 'Content-Type': 'application/json', 'x-student-email': STUDENT_EMAIL },
       body: JSON.stringify(body)
     });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Error ${res.status}`);
-    }
-
+    if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error || `Error ${res.status}`); }
     const data = await res.json();
-
-    // Update call tracker
     if (data._brophy) {
-      callsRemaining = data._brophy.callsRemaining;
-      updateCallsBadge();
+      const r = data._brophy.callsRemaining;
+      document.getElementById('callsText').textContent = `${r} calls left`;
+      const dot = document.querySelector('.calls-badge .dot');
+      if (r <= 5) dot.style.background = '#ffaa4d';
+      if (r <= 2) dot.style.background = '#ff6b6b';
     }
-
     return data.content[0].text;
   }
 
-  function updateCallsBadge() {
-    if (callsRemaining === null) return;
-    const el = document.getElementById('callsText');
-    el.textContent = `${callsRemaining} calls left`;
-    if (callsRemaining <= 5) {
-      document.querySelector('.calls-badge .dot').style.background = '#ffaa4d';
+  // ── PARSE JSON ──
+  function parseJSON(raw) {
+    let c = raw.replace(/```json|```/gi,'').trim();
+    const m = c.match(/\{[\s\S]*\}/);
+    if (m) c = m[0];
+    try { return JSON.parse(c); } catch(e) {
+      let r = c.trimEnd();
+      if (!r.endsWith('}')) {
+        if ((r.match(/"/g)||[]).length % 2 !== 0) r += '"';
+        r += '\n}';
+      }
+      return JSON.parse(r);
     }
-    if (callsRemaining <= 2) {
-      document.querySelector('.calls-badge .dot').style.background = 'var(--accent)';
-    }
+  }
+
+  // ── BUILD 30 DAYS ──
+  function buildPlanDays(parsed) {
+    const days = [];
+    [
+      { num:1, title: parsed.week1Title||'Week 1', goals: parsed.week1Goals||[] },
+      { num:2, title: parsed.week2Title||'Week 2', goals: parsed.week2Goals||[] },
+      { num:3, title: parsed.week3Title||'Week 3', goals: parsed.week3Goals||[] },
+      { num:4, title: parsed.week4Title||'Week 4', goals: parsed.week4Goals||[] },
+    ].forEach(w => {
+      for (let d = 0; d < 7; d++) {
+        days.push({
+          weekNum: w.num, weekTitle: w.title,
+          goals: [
+            w.goals[d*3]   || 'Complete a healthy activity today.',
+            w.goals[d*3+1] || 'Reflect on your progress so far.',
+            w.goals[d*3+2] || 'Do something kind for yourself.',
+          ]
+        });
+      }
+    });
+    return days;
   }
 
   // ── SUBMIT ──
   async function handleSubmit() {
-    const name = document.getElementById('name').value.trim();
-    const age = document.getElementById('age').value;
-    const habitRaw = document.getElementById('habit').value;
+    const name       = document.getElementById('name').value.trim();
+    const age        = document.getElementById('age').value;
+    const habitRaw   = document.getElementById('habit').value;
     const habitOther = document.getElementById('habitOther').value.trim();
-    const habit = habitRaw === 'Other' ? (habitOther || 'unspecified habit') : habitRaw;
-    const duration = document.getElementById('duration').value;
-    const frequency = document.getElementById('frequency').value;
-    const trigger = document.getElementById('trigger').value.trim();
-    const impact = document.getElementById('impact').value.trim();
-    const attempts = document.getElementById('attempts').value.trim();
+    const habit      = habitRaw === 'Other' ? (habitOther||'unspecified habit') : habitRaw;
+    const duration   = document.getElementById('duration').value;
+    const frequency  = document.getElementById('frequency').value;
+    const trigger    = document.getElementById('trigger').value.trim();
+    const impact     = document.getElementById('impact').value.trim();
+    const attempts   = document.getElementById('attempts').value.trim();
+    const sEl        = document.querySelector('input[name="seriousness"]:checked');
+    const seriousness = sEl ? sEl.value : '';
 
-    if (!name || !age || !habitRaw || !duration || !frequency) {
-      showError('Please fill out all required fields before continuing.');
+    if (!name||!age||!habitRaw||!duration||!frequency||!seriousness) {
+      showError('Please fill out all fields, including how serious you are.');
       return;
     }
 
-    // Show loading
-    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('formCard').style.display    = 'none';
     document.getElementById('heroSection').style.display = 'none';
     document.getElementById('loadingScreen').style.display = 'block';
-    document.getElementById('errorMsg').style.display = 'none';
+    document.getElementById('errorMsg').style.display    = 'none';
 
-    const system = `You are BreakFree, an empathetic AI habit coach for teenagers. 
-You speak directly, honestly, and with warmth. You never lecture. You give real, actionable advice.
-CRITICAL: You must respond with ONLY a raw JSON object. No markdown, no code fences, no backticks, no explanation, no text before or after. Just the JSON object starting with { and ending with }.`;
+    const tone = seriousness === 'high'
+      ? 'The user is fully committed. Make goals challenging and direct.'
+      : 'The user wants to ease in gently. Make goals encouraging and low-pressure.';
 
-    const userPrompt = `
-Diagnose this teenager's habit and create a full 30-day recovery plan.
+    const system = `You are BreakFree, an empathetic AI habit coach for teenagers. ${tone}
+CRITICAL: Respond ONLY with a raw JSON object. No markdown, no backticks, no text before or after. Start with { end with }.`;
 
-USER PROFILE:
-- Name: ${name}
-- Age: ${age}
-- Habit: ${habit}
-- Duration: ${duration}
-- Frequency: ${frequency}
-- Triggers: ${trigger || 'not specified'}
-- Impact on life: ${impact || 'not specified'}
-- Previous attempts: ${attempts || 'none mentioned'}
+    const prompt = `Diagnose this teenager's habit and generate a 30-day recovery plan with 3 specific daily goals per day.
 
-Return ONLY this JSON structure (no markdown, no code blocks, just raw JSON):
+USER:
+- Name: ${name}, Age: ${age}
+- Habit: ${habit}, Duration: ${duration}, Frequency: ${frequency}
+- Triggers: ${trigger||'not specified'}
+- Impact: ${impact||'not specified'}
+- Previous attempts: ${attempts||'none'}
+- Commitment: ${seriousness === 'high' ? 'Fully committed, wants tough plan' : 'Gentle start, wants encouraging plan'}
+
+Return ONLY this raw JSON (no markdown):
 {
-  "diagnosisTitle": "short punchy name for their addiction pattern (e.g. 'Dopamine Loop Dependency')",
-  "diagnosisText": "2 sentences max explaining their habit pattern and what's really going on. Be direct.",
-  "commitmentStatement": "One powerful sentence commitment written directly to ${name} about breaking this specific habit. Make it feel real and personal.",
-  "week1Title": "Week 1 theme name",
-  "week1Content": "4 specific daily actions for week 1 (awareness phase). Be concrete and brief. Each on its own line starting with a bullet •",
-  "week2Title": "Week 2 theme name",
-  "week2Content": "4 specific daily actions for week 2 (reduction phase). Be concrete and brief. Each on its own line starting with a bullet •",
-  "week3Title": "Week 3 theme name", 
-  "week3Content": "4 specific daily actions for week 3 (replacement phase). Be concrete and brief. Each on its own line starting with a bullet •",
-  "week4Title": "Week 4 theme name",
-  "week4Content": "4 specific daily actions for week 4 (lock-in phase). Be concrete and brief. Each on its own line starting with a bullet •"
-}`;
+  "diagnosisTitle": "punchy name for their addiction pattern",
+  "diagnosisText": "2 sentences on what is really going on psychologically. Direct and real.",
+  "commitmentStatement": "One powerful sentence written directly to ${name} about breaking this habit.",
+  "week1Title": "Week 1 theme",
+  "week1Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
+  "week2Title": "Week 2 theme",
+  "week2Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
+  "week3Title": "Week 3 theme",
+  "week3Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
+  "week4Title": "Week 4 theme",
+  "week4Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"]
+}
+Each array has exactly 21 strings (7 days x 3 goals). Each goal under 12 words, specific and actionable. Goals get harder each week. Make them personal to ${name}'s habit and triggers.`;
 
     try {
-      const raw = await callProxy([{ role: 'user', content: userPrompt }], system);
+      const raw    = await callProxy([{ role:'user', content: prompt }], system);
+      const parsed = parseJSON(raw);
 
-      // Parse JSON — robust handling for messy AI responses
-      let parsed;
-      try {
-        let cleaned = raw.replace(/```json|```/gi, '').trim();
-        // Extract just the JSON object
-        const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-        if (jsonMatch) cleaned = jsonMatch[0];
-        // Try to repair truncated JSON by closing open strings/objects
-        try {
-          parsed = JSON.parse(cleaned);
-        } catch(e1) {
-          // Attempt repair: close any open string and object
-          let repaired = cleaned.trimEnd();
-          if (!repaired.endsWith('}')) {
-            // Close open string if needed
-            const quoteCount = (repaired.match(/(?<!\\)"/g) || []).length;
-            if (quoteCount % 2 !== 0) repaired += '"';
-            repaired += '\n}';
-          }
-          parsed = JSON.parse(repaired);
-        }
-      } catch(e) {
-        console.error('JSON parse failed:', e, 'Raw:', raw);
-        throw new Error('The AI response was cut off. Please try submitting again — it usually works on the second try.');
-      }
+      planDays  = buildPlanDays(parsed);
+      progress  = { currentDay: 0, totalPoints: 0, dayData: {} };
+      planContext = `User: ${name}, Age: ${age}, Habit: ${habit}. Weeks: ${parsed.week1Title}, ${parsed.week2Title}, ${parsed.week3Title}, ${parsed.week4Title}.`;
 
-      // Store context for support chat
-      planContext = `User: ${name}, Age: ${age}, Habit: ${habit}. Their 30-day plan was generated with these themes: Week 1: ${parsed.week1Title}, Week 2: ${parsed.week2Title}, Week 3: ${parsed.week3Title}, Week 4: ${parsed.week4Title}.`;
-
-      // Populate results
       document.getElementById('diagnosisTitle').textContent = parsed.diagnosisTitle || 'Your Habit Pattern';
-      document.getElementById('diagnosisText').textContent = parsed.diagnosisText || '';
+      document.getElementById('diagnosisText').textContent  = parsed.diagnosisText  || '';
       document.getElementById('commitmentText').textContent = parsed.commitmentStatement || '';
-      document.getElementById('week1Title').textContent = parsed.week1Title || 'Week 1';
-      document.getElementById('week1Content').textContent = parsed.week1Content || '';
-      document.getElementById('week2Title').textContent = parsed.week2Title || 'Week 2';
-      document.getElementById('week2Content').textContent = parsed.week2Content || '';
-      document.getElementById('week3Title').textContent = parsed.week3Title || 'Week 3';
-      document.getElementById('week3Content').textContent = parsed.week3Content || '';
-      document.getElementById('week4Title').textContent = parsed.week4Title || 'Week 4';
-      document.getElementById('week4Content').textContent = parsed.week4Content || '';
 
-      // Show results
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('resultsScreen').style.display = 'block';
+      document.getElementById('loadingScreen').style.display  = 'none';
+      document.getElementById('resultsScreen').style.display  = 'block';
+      document.getElementById('pointsBadge').style.display    = 'flex';
+
+      renderDay(0);
+      updatePointsUI();
+      saveProgress();
 
     } catch(err) {
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('heroSection').style.display = 'block';
-      document.getElementById('formCard').style.display = 'block';
+      document.getElementById('loadingScreen').style.display  = 'none';
+      document.getElementById('heroSection').style.display    = 'block';
+      document.getElementById('formCard').style.display       = 'block';
       showError(err.message || 'Something went wrong. Please try again.');
     }
   }
 
+  // ── RENDER DAY ──
+  function renderDay(index) {
+    if (!planDays[index]) return;
+    const day    = planDays[index];
+    const dayNum = index + 1;
+    document.getElementById('weekTag').textContent       = `${day.weekTitle} · Week ${day.weekNum}`;
+    document.getElementById('dayTitle').textContent      = `Day ${dayNum}`;
+    document.getElementById('dayProgressText').textContent = `Day ${dayNum} of 30`;
+    document.getElementById('progressFill').style.width  = `${(dayNum/30)*100}%`;
+    document.getElementById('prevBtn').disabled = index === 0;
+    document.getElementById('nextBtn').disabled = index === 29;
+
+    const saved = progress.dayData[index] || { completed:[false,false,false], points:0 };
+    const list  = document.getElementById('goalsList');
+    list.innerHTML = '';
+
+    day.goals.forEach((goal, gi) => {
+      const done = saved.completed[gi] || false;
+      const item = document.createElement('div');
+      item.className = `goal-item${done?' completed':''}`;
+      item.innerHTML = `
+        <div class="goal-checkbox">${done ? '✓' : ''}</div>
+        <div class="goal-text">${goal}</div>
+        <div class="goal-points">+5 pts</div>`;
+      item.addEventListener('click', () => toggleGoal(index, gi));
+      list.appendChild(item);
+    });
+
+    const pts = (saved.completed.filter(Boolean).length) * 5;
+    document.getElementById('todayPointsNum').textContent = pts;
+  }
+
+  function toggleGoal(dayIndex, goalIndex) {
+    if (!progress.dayData[dayIndex])
+      progress.dayData[dayIndex] = { completed:[false,false,false], points:0 };
+    const d = progress.dayData[dayIndex];
+    const was = d.completed[goalIndex];
+    d.completed[goalIndex] = !was;
+    progress.totalPoints += was ? -5 : 5;
+    if (progress.totalPoints < 0) progress.totalPoints = 0;
+    d.points = d.completed.filter(Boolean).length * 5;
+    updatePointsUI();
+    renderDay(dayIndex);
+    saveProgress();
+  }
+
+  function updatePointsUI() {
+    const pts = progress.totalPoints;
+    document.getElementById('totalPointsDisplay').innerHTML = `${pts}<span>total points</span>`;
+    document.getElementById('headerPoints').textContent = pts;
+    const el = document.getElementById('totalPointsDisplay');
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+  }
+
+  function changeDay(dir) {
+    const next = progress.currentDay + dir;
+    if (next < 0 || next > 29) return;
+    progress.currentDay = next;
+    renderDay(next);
+    saveProgress();
+    document.querySelector('.daily-card').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
   // ── LOCK IN ──
   function handleLockin() {
-    const val = document.getElementById('lockinInput').value.trim().toLowerCase();
-    if (val === "i'm in" || val === "im in" || val === "i'm in") {
+    const val = document.getElementById('lockinInput').value.trim().toLowerCase().replace(/['']/g,"'");
+    if (val === "i'm in" || val === "im in") {
       document.getElementById('lockedConfirmation').style.display = 'flex';
       document.getElementById('lockinInput').disabled = true;
-      document.querySelector('.btn-lockin').disabled = true;
-      document.getElementById('lockinInput').value = "I'm in ✓";
-
-      // Show support card after lock-in
+      document.querySelector('.btn-lockin').disabled  = true;
+      document.getElementById('lockinInput').value    = "I'm in ✓";
       setTimeout(() => {
         document.getElementById('supportCard').style.display = 'block';
         updateSupportCallsDisplay();
-        document.getElementById('supportCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('supportCard').scrollIntoView({ behavior:'smooth', block:'start' });
       }, 800);
+      saveProgress();
     } else {
       document.getElementById('lockinInput').style.borderColor = 'var(--accent)';
-      document.getElementById('lockinInput').placeholder = 'Type exactly: I\'m in';
-      setTimeout(() => {
-        document.getElementById('lockinInput').style.borderColor = '';
-      }, 1200);
+      document.getElementById('lockinInput').placeholder = "Type exactly: I'm in";
+      setTimeout(() => { document.getElementById('lockinInput').style.borderColor = ''; }, 1400);
     }
   }
 
-  // ── SUPPORT CHAT ──
+  // ── SUPPORT ──
   function updateSupportCallsDisplay() {
-    const remaining = MAX_SUPPORT_CALLS - supportCallsUsed;
+    const r = MAX_SUPPORT_CALLS - supportCallsUsed;
     document.getElementById('supportCallsLeft').textContent =
-      remaining > 0 ? `${remaining} support message${remaining === 1 ? '' : 's'} remaining.` : 'No support messages remaining.';
-
-    if (remaining <= 0) {
+      r > 0 ? `${r} support message${r===1?'':'s'} remaining.` : 'No support messages remaining.';
+    if (r <= 0) {
       document.getElementById('chatInput').disabled = true;
-      document.getElementById('sendBtn').disabled = true;
+      document.getElementById('sendBtn').disabled   = true;
       document.getElementById('callsWarning').style.display = 'block';
-      document.getElementById('callsWarning').textContent = "You've used your support message. You've got this — trust your plan.";
+      document.getElementById('callsWarning').textContent   = "You've used your support message. Trust your plan — you've got this.";
     }
   }
 
   async function sendChat() {
     const input = document.getElementById('chatInput');
-    const msg = input.value.trim();
-    if (!msg) return;
-
-    if (supportCallsUsed >= MAX_SUPPORT_CALLS) return;
-
+    const msg   = input.value.trim();
+    if (!msg || supportCallsUsed >= MAX_SUPPORT_CALLS) return;
     input.value = '';
     addMessage('user', msg);
     document.getElementById('sendBtn').disabled = true;
-
-    chatHistory.push({ role: 'user', content: msg });
-
-    const system = `You are BreakFree, a supportive AI habit coach. 
-Context about this user: ${planContext}
-Keep responses short (3-5 sentences max), warm, direct, and actionable. No fluff.`;
-
+    chatHistory.push({ role:'user', content: msg });
+    const system = `You are BreakFree, a supportive AI habit coach. Context: ${planContext}. Keep responses 3-5 sentences, warm, direct, actionable.`;
     try {
       const reply = await callProxy(chatHistory, system);
-      chatHistory.push({ role: 'assistant', content: reply });
+      chatHistory.push({ role:'assistant', content: reply });
       addMessage('ai', reply);
       supportCallsUsed++;
-    } catch(err) {
+    } catch(e) {
       addMessage('ai', 'Something went wrong. Please try again.');
     } finally {
       document.getElementById('sendBtn').disabled = false;
@@ -1033,24 +1000,27 @@ Keep responses short (3-5 sentences max), warm, direct, and actionable. No fluff
     el.className = `msg ${role}`;
     el.textContent = text;
     document.getElementById('chatMessages').appendChild(el);
-    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    el.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }
 
   // ── RESET ──
   function resetApp() {
-    document.getElementById('resultsScreen').style.display = 'none';
-    document.getElementById('heroSection').style.display = 'block';
-    document.getElementById('formCard').style.display = 'block';
+    if (!confirm('This will clear your progress and start over. Are you sure?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    planDays=[]; progress={currentDay:0,totalPoints:0,dayData:{}}; chatHistory=[]; supportCallsUsed=0; planContext='';
+    document.getElementById('resultsScreen').style.display  = 'none';
+    document.getElementById('heroSection').style.display    = 'block';
+    document.getElementById('formCard').style.display       = 'block';
     document.getElementById('lockedConfirmation').style.display = 'none';
     document.getElementById('lockinInput').disabled = false;
-    document.getElementById('lockinInput').value = '';
-    document.querySelector('.btn-lockin').disabled = false;
+    document.getElementById('lockinInput').value    = '';
+    document.querySelector('.btn-lockin').disabled  = false;
     document.getElementById('chatMessages').innerHTML = '';
-    document.getElementById('supportCard').style.display = 'none';
-    chatHistory = [];
-    supportCallsUsed = 0;
-    planContext = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('supportCard').style.display    = 'none';
+    document.getElementById('pointsBadge').style.display    = 'none';
+    document.getElementById('totalPointsDisplay').innerHTML = '0<span>total points</span>';
+    document.getElementById('headerPoints').textContent     = '0';
+    window.scrollTo({ top:0, behavior:'smooth' });
   }
 
   function showError(msg) {
@@ -1058,6 +1028,8 @@ Keep responses short (3-5 sentences max), warm, direct, and actionable. No fluff
     el.textContent = msg;
     el.style.display = 'block';
   }
+
+  loadSaved();
 </script>
 </body>
 </html>
