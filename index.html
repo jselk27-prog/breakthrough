@@ -1140,7 +1140,7 @@ Return ONLY this raw JSON:
   "week4Title": "Week 4 theme",
   "week4Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"]
 }
-Each array = exactly 21 strings (7 days x 3 goals). Each goal: single short string, NO newlines, NO line breaks, under 12 words, specific and actionable. Goals get harder each week. Personal to ${name}'s habit.`;
+Each array = exactly 21 strings (7 days x 3 goals). Each goal: MAX 7 WORDS, no exceptions. Short, punchy, actionable. NO newlines. NO long sentences. Example: "Leave phone outside bedroom tonight" or "Delete TikTok for 24 hours". Goals get harder each week.`;
 
     try {
       const raw    = await callProxy([{ role:'user', content: prompt }], system);
@@ -1395,7 +1395,7 @@ Each array = exactly 21 strings (7 days x 3 goals). Each goal: single short stri
 
   // ── PROXY ──
   async function callProxy(messages, system='') {
-    const body = { messages, max_tokens:1500 };
+    const body = { messages, max_tokens:2000 };
     if (system) body.system = system;
     const res = await fetch(PROXY_URL, {
       method:'POST',
