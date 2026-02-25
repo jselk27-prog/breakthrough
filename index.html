@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BreakFree — AI Habit Recovery</title>
+  <title>BreakFree</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,12 +34,10 @@
     body::after {
       content: '';
       position: fixed;
-      top: -200px;
-      left: 50%;
+      top: -200px; left: 50%;
       transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(107,159,255,0.10) 0%, transparent 70%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(107,159,255,0.08) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -51,447 +49,692 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 20px 80px;
+      padding: 0 24px 100px;
     }
 
+    /* ── HEADER ── */
     header {
-      width: 100%;
-      max-width: 700px;
+      width: 100%; max-width: 640px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 28px 0 0;
     }
 
-    .logo { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; }
+    .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
     .logo span { color: var(--accent); }
-
     .header-right { display: flex; align-items: center; gap: 10px; }
 
     .points-badge {
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.76rem; font-weight: 700;
       color: var(--gold);
-      background: rgba(255,209,102,0.1);
-      border: 1px solid rgba(255,209,102,0.25);
-      padding: 5px 14px;
-      border-radius: 999px;
-      display: none;
-      align-items: center;
-      gap: 6px;
+      background: rgba(255,209,102,0.08);
+      border: 1px solid rgba(255,209,102,0.2);
+      padding: 4px 12px; border-radius: 999px;
+      display: none; align-items: center; gap: 5px;
     }
 
     .calls-badge {
-      font-size: 0.75rem;
-      color: var(--muted);
+      font-size: 0.73rem; color: var(--muted);
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 5px 12px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      padding: 4px 12px; border-radius: 999px;
+      display: flex; align-items: center; gap: 6px;
     }
 
     .calls-badge .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
+      width: 6px; height: 6px; border-radius: 50%;
       background: var(--success);
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
-    .hero {
-      width: 100%;
-      max-width: 700px;
+    /* ── LANDING ── */
+    #landingScreen {
+      width: 100%; max-width: 640px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
-      padding: 64px 0 48px;
-      animation: fadeUp 0.7s ease both;
+      padding: 100px 0 60px;
+      animation: fadeUp 0.8s ease both;
     }
 
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
+    .landing-eyebrow {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 20px;
     }
 
-    .hero h1 {
-      font-family: 'Nunito', sans-serif;
+    .landing-title {
       font-weight: 800;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
+      font-size: clamp(2.6rem, 7vw, 4.2rem);
+      line-height: 1.05; letter-spacing: -0.04em;
+      margin-bottom: 22px;
     }
 
-    .hero h1 em { font-style: normal; color: var(--accent); }
-    .hero p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto; }
+    .landing-title em { font-style: normal; color: var(--accent); }
 
-    .card {
-      width: 100%;
-      max-width: 700px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      animation: fadeUp 0.7s 0.15s ease both;
+    .landing-sub {
+      color: var(--muted); font-size: 1.05rem;
+      max-width: 420px; margin: 0 auto 48px;
+      line-height: 1.7;
     }
 
-    .card-title { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 6px; }
-    .card-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 32px; }
+    .btn-start {
+      padding: 18px 48px;
+      background: var(--accent);
+      color: white; border: none;
+      border-radius: 999px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+    }
 
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .form-group { display: flex; flex-direction: column; gap: 8px; }
-    .form-group.full { grid-column: 1 / -1; }
+    .btn-start:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(107,159,255,0.35);
+    }
 
-    label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .btn-demo {
+      margin-top: 16px;
+      padding: 12px 32px;
+      background: none;
+      border: 1.5px solid var(--border);
       color: var(--muted);
+      border-radius: 999px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600; font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      display: block;
+      margin-left: auto; margin-right: auto;
+    }
+    .btn-demo:hover { border-color: var(--accent); color: var(--text); }
+
+    /* ── INTERVIEW ── */
+    #interviewScreen {
+      width: 100%; max-width: 640px;
+      display: none;
+      padding-top: 60px;
     }
 
-    input, select, textarea {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+    .interview-progress {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 52px;
+    }
+
+    .progress-track {
+      flex: 1; height: 3px;
+      background: var(--border); border-radius: 999px;
+    }
+
+    .progress-track-fill {
+      height: 100%; background: var(--accent);
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-label {
+      font-size: 0.75rem; color: var(--muted);
+      white-space: nowrap; font-weight: 600;
+    }
+
+    .question-wrap {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .question-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+
+    .question-text {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 500; line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 36px;
+      color: var(--text);
+    }
+
+    /* Answer options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .options-grid.single-col { grid-template-columns: 1fr; }
+
+    .option-btn {
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
       color: var(--text);
       font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem;
-      padding: 12px 16px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-      width: 100%;
-      appearance: none;
+      font-weight: 600; font-size: 0.92rem;
+      cursor: pointer; text-align: left;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s;
+      line-height: 1.4;
     }
 
-    input::placeholder, textarea::placeholder { color: var(--muted); }
-
-    input:focus, select:focus, textarea:focus {
+    .option-btn:hover {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(107,159,255,0.12);
+      background: rgba(107,159,255,0.07);
+      transform: translateY(-1px);
     }
 
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
-      cursor: pointer;
+    .option-btn.selected {
+      border-color: var(--accent);
+      background: rgba(107,159,255,0.12);
     }
 
-    select option { background: var(--surface2); }
-    textarea { resize: vertical; min-height: 80px; }
-
-    /* Seriousness toggle */
-    .seriousness-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .serious-option { display: none; }
-
-    .serious-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 18px 12px;
-      background: var(--surface2);
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      text-align: center;
+    /* Seriousness options */
+    .serious-btn {
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 6px;
     }
 
-    .serious-label:hover { border-color: var(--accent); background: rgba(107,159,255,0.06); }
-    .serious-option:checked + .serious-label { border-color: var(--accent); background: rgba(107,159,255,0.1); }
+    .serious-btn .s-emoji { font-size: 1.5rem; }
+    .serious-btn .s-title { font-weight: 700; font-size: 0.95rem; }
+    .serious-btn .s-desc { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
 
-    .serious-emoji { font-size: 1.6rem; }
-    .serious-title { font-weight: 700; font-size: 0.95rem; }
-    .serious-desc { font-size: 0.78rem; color: var(--muted); }
+    /* Text input style */
+    .text-answer-wrap {
+      margin-bottom: 28px;
+    }
 
-    .btn-primary {
+    .text-answer {
       width: 100%;
-      margin-top: 28px;
-      padding: 16px;
-      background: var(--accent);
-      color: white;
+      background: transparent;
       border: none;
-      border-radius: 12px;
+      border-bottom: 2px solid var(--border);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      padding: 12px 4px;
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+    }
+
+    .text-answer::placeholder { color: var(--muted); }
+    .text-answer:focus { border-bottom-color: var(--accent); }
+
+    .textarea-answer {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--border);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      padding: 12px 4px;
+      outline: none;
+      resize: none;
+      min-height: 80px;
+      transition: border-color 0.2s;
+      border-radius: 0;
+    }
+
+    .textarea-answer::placeholder { color: var(--muted); }
+    .textarea-answer:focus { border-bottom-color: var(--accent); }
+
+    .btn-next {
+      padding: 14px 36px;
+      background: var(--accent);
+      color: white; border: none;
+      border-radius: 999px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
+      font-weight: 800; font-size: 0.92rem;
       cursor: pointer;
       transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
     }
 
-    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(107,159,255,0.35); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-next:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(107,159,255,0.3);
+    }
 
-    .loading-screen {
-      width: 100%;
-      max-width: 700px;
+    .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-back {
+      background: none; border: none;
+      color: var(--muted); font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem; cursor: pointer;
+      margin-right: 16px;
+      transition: color 0.2s;
+    }
+
+    .btn-back:hover { color: var(--text); }
+
+    /* ── LOADING ── */
+    #loadingScreen {
+      width: 100%; max-width: 640px;
       text-align: center;
-      padding: 80px 20px;
+      padding: 100px 0;
       display: none;
-      animation: fadeUp 0.5s ease both;
     }
 
     .loader {
-      width: 48px; height: 48px;
+      width: 44px; height: 44px;
       border: 3px solid var(--border);
       border-top-color: var(--accent);
       border-radius: 50%;
-      margin: 0 auto 28px;
+      margin: 0 auto 32px;
       animation: spin 0.8s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .loading-screen h2 { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: 10px; }
-    .loading-screen p { color: var(--muted); font-size: 0.9rem; }
-
-    .results-screen { width: 100%; max-width: 700px; display: none; animation: fadeUp 0.6s ease both; }
-
-    .diagnosis-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 40px;
-      margin-bottom: 20px;
-      position: relative;
-      overflow: hidden;
+    .loading-title {
+      font-weight: 700; font-size: 1.3rem;
+      margin-bottom: 10px;
     }
 
-    .diagnosis-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    .loading-sub { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── PLAN SCREEN ── */
+    #planScreen {
+      width: 100%; max-width: 640px;
+      display: none;
     }
 
-    .diagnosis-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
-    .diagnosis-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 14px; }
-    .diagnosis-text { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+    /* Diagnosis section — no card, just typography */
+    .dx-section {
+      padding: 52px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s ease both;
+    }
 
-    /* Points card */
-    .points-card {
-      background: var(--surface);
-      border: 1px solid rgba(255,209,102,0.2);
-      border-radius: 20px;
-      padding: 28px 40px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
+    .dx-eyebrow {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+
+    .dx-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 500; line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    .dx-text {
+      color: var(--muted);
+      font-size: 1rem; line-height: 1.8;
+      max-width: 540px;
+    }
+
+    /* Points strip */
+    .points-strip {
+      display: flex; align-items: baseline; gap: 10px;
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .pts-number {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 3rem;
+      color: var(--gold); line-height: 1;
+      transition: all 0.3s;
+    }
+
+    .pts-label-big {
+      font-size: 0.85rem; color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .pts-label-big strong { display: block; color: var(--text); font-size: 0.95rem; }
+
+    /* Day view — journal style */
+    .day-section {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .day-nav-top {
+      display: flex; align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      margin-bottom: 32px;
     }
 
-    .points-card-info h3 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 3px; }
-    .points-card-info p { font-size: 0.82rem; color: var(--muted); }
-
-    .points-big { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 2.8rem; color: var(--gold); line-height: 1; text-align: right; }
-    .points-big span { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); }
-
-    /* Daily card */
-    .daily-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 40px;
-      margin-bottom: 20px;
+    .day-nav-info {
+      display: flex; flex-direction: column; gap: 3px;
     }
 
-    .daily-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 16px; }
-    .daily-meta { display: flex; flex-direction: column; gap: 4px; }
+    .day-week-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent);
+    }
 
-    .week-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
-    .day-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; }
+    .day-number-label {
+      font-weight: 800; font-size: 1.6rem;
+      letter-spacing: -0.03em; line-height: 1;
+    }
 
-    .day-points-today { text-align: right; flex-shrink: 0; }
-    .day-points-today .pts-num { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--gold); line-height: 1; }
-    .day-points-today .pts-label { font-size: 0.72rem; color: var(--muted); display: block; }
+    .day-nav-buttons { display: flex; gap: 8px; }
 
-    .goals-list { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
-
-    .goal-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 16px 18px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      cursor: pointer;
+    .nav-arrow {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: none; color: var(--text);
+      font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s, background 0.2s;
-      user-select: none;
     }
 
-    .goal-item:hover { border-color: var(--accent); }
-    .goal-item.completed { background: rgba(107,159,255,0.07); border-color: rgba(107,159,255,0.3); }
+    .nav-arrow:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(107,159,255,0.08);
+    }
 
-    .goal-checkbox {
-      width: 22px; height: 22px;
+    .nav-arrow:disabled { opacity: 0.25; cursor: not-allowed; }
+
+    /* Progress bar thin */
+    .thin-progress {
+      height: 2px; background: var(--border);
+      border-radius: 999px; margin-bottom: 40px;
+    }
+
+    .thin-progress-fill {
+      height: 100%; background: var(--accent);
+      border-radius: 999px; transition: width 0.5s ease;
+    }
+
+    /* Goals — journal entries */
+    .goals-area {
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .goal-row {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(42,48,72,0.6);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .goal-row:last-child { border-bottom: none; }
+    .goal-row:hover { opacity: 0.85; }
+
+    .goal-check-circle {
+      width: 24px; height: 24px; flex-shrink: 0;
       border: 2px solid var(--border);
-      border-radius: 6px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 1px;
-      transition: all 0.2s;
-      font-size: 0.8rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+      transition: all 0.25s;
+      font-size: 0.75rem;
     }
 
-    .goal-item.completed .goal-checkbox { background: var(--accent); border-color: var(--accent); }
-    .goal-text { font-size: 0.95rem; line-height: 1.5; color: var(--text); transition: color 0.2s; flex: 1; }
-    .goal-item.completed .goal-text { color: var(--muted); text-decoration: line-through; }
+    .goal-row.done .goal-check-circle {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
 
-    .goal-points { flex-shrink: 0; font-size: 0.78rem; font-weight: 700; color: var(--gold); opacity: 0; transition: opacity 0.3s; }
-    .goal-item.completed .goal-points { opacity: 1; }
+    .goal-body { flex: 1; }
 
-    .day-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; gap: 12px; }
+    .goal-body-text {
+      font-size: 1rem; line-height: 1.6;
+      color: var(--text);
+      transition: color 0.2s;
+    }
 
-    .btn-nav {
-      padding: 12px 24px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+    .goal-row.done .goal-body-text {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(122,138,170,0.4);
+    }
+
+    .goal-pts-tag {
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.3s;
+      margin-top: 4px;
+    }
+
+    .goal-row.done .goal-pts-tag { opacity: 1; }
+
+    /* Today's pts inline */
+    .today-pts-line {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .today-pts-line span {
+      font-size: 0.82rem; color: var(--muted);
+    }
+
+    .today-pts-val {
+      font-weight: 800; font-size: 1rem;
+      color: var(--gold);
+    }
+
+    /* Journal */
+    .journal-section {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .journal-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 14px;
+    }
+
+    .journal-field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--border);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      font-size: 0.95rem; line-height: 1.7;
+      padding: 8px 4px 12px;
+      outline: none; resize: none;
+      min-height: 90px;
+      transition: border-color 0.2s;
+      border-radius: 0;
+    }
+
+    .journal-field:focus { border-bottom-color: var(--accent); }
+    .journal-field::placeholder { color: var(--muted); font-style: italic; }
+
+    .journal-saved {
+      font-size: 0.74rem; color: var(--muted);
+      margin-top: 8px; height: 16px;
+      transition: opacity 0.4s;
+    }
+
+    /* Lock-in section */
+    .lockin-section {
+      padding: 52px 0 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 52px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .lockin-eyebrow {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+
+    .lockin-title {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem; font-weight: 500;
+      margin-bottom: 14px; line-height: 1.25;
+    }
+
+    .commitment-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1rem; line-height: 1.7;
+      margin-bottom: 32px;
+      padding-left: 20px;
+      border-left: 2px solid var(--border);
+    }
+
+    .lockin-input-row {
+      display: flex; gap: 12px; max-width: 400px;
+    }
+
+    .lockin-field {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--border);
       color: var(--text);
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      font-size: 1rem; font-weight: 600;
+      padding: 10px 4px;
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
     }
 
-    .btn-nav:hover:not(:disabled) { border-color: var(--accent); background: rgba(107,159,255,0.08); }
-    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    .day-progress { font-size: 0.82rem; color: var(--muted); text-align: center; }
-    .progress-bar-wrap { height: 4px; background: var(--border); border-radius: 999px; margin-top: 6px; width: 120px; }
-    .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.4s ease; }
-
-    /* Lock in */
-    .lockin-card {
-      background: linear-gradient(135deg, rgba(107,159,255,0.08), rgba(160,196,255,0.04));
-      border: 1px solid rgba(107,159,255,0.25);
-      border-radius: 20px;
-      padding: 40px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .lockin-icon { font-size: 2.5rem; margin-bottom: 16px; }
-    .lockin-card h2 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 12px; }
-    .commitment-text { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 28px; font-style: italic; }
-
-    .lockin-input-row { display: flex; gap: 12px; max-width: 400px; margin: 0 auto; }
-    .lockin-input-row input { flex: 1; text-align: center; font-weight: 600; }
+    .lockin-field:focus { border-bottom-color: var(--accent); }
+    .lockin-field::placeholder { color: var(--muted); }
 
     .btn-lockin {
       padding: 12px 24px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 10px;
+      background: var(--accent); color: white;
+      border: none; border-radius: 999px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 0.9rem;
+      font-weight: 800; font-size: 0.88rem;
       cursor: pointer;
-      white-space: nowrap;
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
-    .btn-lockin:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,159,255,0.35); }
+    .btn-lockin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(107,159,255,0.3);
+    }
 
-    .locked-confirmation {
+    .locked-msg {
       display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
       color: var(--success);
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-top: 20px;
+      font-weight: 700; font-size: 0.95rem;
+      margin-top: 18px;
       animation: fadeUp 0.4s ease both;
     }
 
-    /* Support */
-    .support-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 40px; margin-bottom: 20px; display: none; }
-    .support-card h3 { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+    /* Support section */
+    .support-section {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+      display: none;
+    }
 
-    .chat-messages { min-height: 40px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .support-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px;
+    }
 
-    .msg { padding: 12px 16px; border-radius: 12px; font-size: 0.92rem; line-height: 1.6; max-width: 90%; animation: fadeUp 0.3s ease both; }
-    .msg.user { background: rgba(107,159,255,0.12); border: 1px solid rgba(107,159,255,0.2); align-self: flex-end; }
-    .msg.ai { background: var(--surface2); border: 1px solid var(--border); align-self: flex-start; color: var(--muted); }
+    .chat-messages {
+      display: flex; flex-direction: column; gap: 14px;
+      margin-bottom: 20px;
+    }
 
-    .chat-input-row { display: flex; gap: 10px; }
-    .chat-input-row input { flex: 1; }
+    .msg {
+      font-size: 0.95rem; line-height: 1.65;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .msg.user { color: var(--text); font-weight: 600; }
+    .msg.user::before { content: 'You  '; color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 3px; }
+    .msg.ai { color: var(--muted); }
+    .msg.ai::before { content: 'BreakFree  '; color: var(--muted); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 3px; }
+
+    .chat-input-row { display: flex; gap: 12px; align-items: flex-end; }
+
+    .chat-field {
+      flex: 1; background: transparent; border: none;
+      border-bottom: 2px solid var(--border);
+      color: var(--text); font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem; padding: 10px 4px;
+      outline: none; transition: border-color 0.2s;
+      border-radius: 0;
+    }
+
+    .chat-field:focus { border-bottom-color: var(--accent); }
+    .chat-field::placeholder { color: var(--muted); }
 
     .btn-send {
-      padding: 12px 20px;
-      background: var(--surface2);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      padding: 10px 22px;
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--text); border-radius: 999px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700; font-size: 0.85rem;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
       white-space: nowrap;
     }
 
-    .btn-send:hover:not(:disabled) { border-color: var(--accent); background: rgba(107,159,255,0.08); }
-    .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
-    .calls-warning { text-align: center; font-size: 0.8rem; color: var(--accent); margin-top: 8px; display: none; }
+    .btn-send:hover:not(:disabled) { border-color: var(--accent); background: rgba(107,159,255,0.07); }
+    .btn-send:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    .btn-reset {
-      display: block;
-      margin: 10px auto 0;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 10px 24px;
-      border-radius: 10px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+    .support-note {
+      font-size: 0.78rem; color: var(--muted);
+      margin-top: 10px;
     }
 
-    .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+    /* Reset */
+    .reset-line {
+      text-align: center;
+      padding: 40px 0 20px;
+    }
 
+    .btn-reset {
+      background: none; border: none;
+      color: var(--muted); font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem; cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .btn-reset:hover { color: var(--text); }
+
+    /* Error */
     .error-msg {
-      background: rgba(255,100,100,0.1);
-      border: 1px solid rgba(255,100,100,0.3);
+      background: rgba(255,100,100,0.08);
+      border: 1px solid rgba(255,100,100,0.25);
       border-radius: 10px;
-      padding: 14px 18px;
-      font-size: 0.88rem;
+      padding: 12px 16px;
+      font-size: 0.86rem;
       color: #ff9a9a;
       margin-top: 16px;
       display: none;
     }
 
-    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes pointsPop { 0%{transform:scale(1)} 50%{transform:scale(1.2)} 100%{transform:scale(1)} }
-    .pop { animation: pointsPop 0.35s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes ptsPop { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
+    .pop { animation: ptsPop 0.35s ease; }
 
-    @media (max-width: 600px) {
-      .card, .diagnosis-card, .daily-card, .lockin-card, .support-card, .points-card { padding: 24px 20px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .lockin-input-row { flex-direction: column; }
-      .hero h1 { font-size: 2.1rem; }
-      .seriousness-group { grid-template-columns: 1fr; }
-      .day-nav { flex-wrap: wrap; }
+    @media (max-width: 560px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .landing-title { font-size: 2.4rem; }
+      .pts-number { font-size: 2.4rem; }
     }
   </style>
 </head>
@@ -509,245 +752,429 @@
     </div>
   </header>
 
-  <!-- FORM -->
-  <section class="hero" id="heroSection">
-    <div class="hero-eyebrow">AI Habit Recovery</div>
-    <h1>Know your habit.<br/><em>Break it for good.</em></h1>
-    <p>Answer a few honest questions. The AI will diagnose your habit and build a personalized 30-day plan — one day at a time.</p>
-  </section>
+  <!-- ── LANDING ── -->
+  <div id="landingScreen">
+    <div class="landing-eyebrow">AI Habit Recovery</div>
+    <h1 class="landing-title">Know your habit.<br/><em>Break it for good.</em></h1>
+    <p class="landing-sub">Answer a few questions and the AI will build you a personal 30-day recovery plan — with daily goals and a points system to keep you going.</p>
+    <button class="btn-start" onclick="startJourney()">Start Your Journey →</button>
+    <button class="btn-demo" onclick="loadDemo()">Preview Demo Plan</button>
+  </div>
 
-  <div class="card" id="formCard">
-    <div class="card-title">Tell us about your habit</div>
-    <div class="card-sub">Be honest — the more detail you give, the better your plan.</div>
-
-    <div class="form-grid">
-      <div class="form-group">
-        <label>First Name</label>
-        <input type="text" id="name" placeholder="Your name"/>
+  <!-- ── INTERVIEW ── -->
+  <div id="interviewScreen" style="display:none;">
+    <div class="interview-progress">
+      <div class="progress-track">
+        <div class="progress-track-fill" id="progressFill" style="width:0%"></div>
       </div>
-      <div class="form-group">
-        <label>Age</label>
-        <select id="age">
-          <option value="" disabled selected>Select age</option>
-          <option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19+</option>
-        </select>
-      </div>
-      <div class="form-group full">
-        <label>What is your biggest habit or addiction?</label>
-        <select id="habit">
-          <option value="" disabled selected>Choose one</option>
-          <option>Social media (Instagram, TikTok, Snapchat)</option>
-          <option>Gaming / video games</option>
-          <option>YouTube / streaming</option>
-          <option>My phone in general</option>
-          <option>Junk food / snacking</option>
-          <option>Vaping / nicotine</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group full" id="otherGroup" style="display:none;">
-        <label>Describe your habit</label>
-        <input type="text" id="habitOther" placeholder="e.g. I can't stop checking Reddit..."/>
-      </div>
-      <div class="form-group">
-        <label>How long has this been going on?</label>
-        <select id="duration">
-          <option value="" disabled selected>Select duration</option>
-          <option>A few weeks</option><option>A few months</option><option>About a year</option><option>Multiple years</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>How often does it happen?</label>
-        <select id="frequency">
-          <option value="" disabled selected>Select frequency</option>
-          <option>A few times a week</option><option>Every day</option><option>Multiple times a day</option><option>Almost constantly</option>
-        </select>
-      </div>
-      <div class="form-group full">
-        <label>What triggers it?</label>
-        <input type="text" id="trigger" placeholder="e.g. when I'm bored, right before bed, after school..."/>
-      </div>
-      <div class="form-group full">
-        <label>How has it negatively affected your life?</label>
-        <textarea id="impact" placeholder="e.g. it's hurting my grades, I stay up too late, I feel anxious without it..."></textarea>
-      </div>
-      <div class="form-group full">
-        <label>Have you tried to stop before?</label>
-        <input type="text" id="attempts" placeholder="e.g. I tried deleting the app but reinstalled it in a day..."/>
-      </div>
-      <div class="form-group full">
-        <label>How serious are you about breaking this habit?</label>
-        <div class="seriousness-group">
-          <input type="radio" name="seriousness" id="seriousHigh" value="high" class="serious-option"/>
-          <label for="seriousHigh" class="serious-label">
-            <span class="serious-emoji">🔥</span>
-            <span class="serious-title">I'm fully committed</span>
-            <span class="serious-desc">I want a challenging, no-excuses plan</span>
-          </label>
-          <input type="radio" name="seriousness" id="seriousLow" value="low" class="serious-option"/>
-          <label for="seriousLow" class="serious-label">
-            <span class="serious-emoji">🌱</span>
-            <span class="serious-title">Taking it step by step</span>
-            <span class="serious-desc">I want a gentle, easygoing plan to start</span>
-          </label>
-        </div>
-      </div>
+      <div class="progress-label" id="progressLabel">1 of 8</div>
     </div>
-
-    <button class="btn-primary" onclick="handleSubmit()">Generate My 30-Day Plan →</button>
+    <div class="question-wrap" id="questionWrap"></div>
     <div class="error-msg" id="errorMsg"></div>
   </div>
 
-  <!-- LOADING -->
-  <div class="loading-screen" id="loadingScreen">
+  <!-- ── LOADING ── -->
+  <div id="loadingScreen" style="display:none;">
     <div class="loader"></div>
-    <h2>Building your plan...</h2>
-    <p>The AI is personalizing your 30-day recovery journey. Just a moment.</p>
+    <div class="loading-title">Building your plan...</div>
+    <div class="loading-sub">Personalizing your 30-day recovery journey.</div>
   </div>
 
-  <!-- RESULTS -->
-  <div class="results-screen" id="resultsScreen">
+  <!-- ── PLAN ── -->
+  <div id="planScreen" style="display:none;">
 
-    <div class="diagnosis-card">
-      <div class="diagnosis-label">Your Diagnosis</div>
-      <div class="diagnosis-title" id="diagnosisTitle">—</div>
-      <div class="diagnosis-text" id="diagnosisText">—</div>
+    <div class="dx-section" id="dxSection">
+      <div class="dx-eyebrow">Your Diagnosis</div>
+      <div class="dx-title" id="dxTitle">—</div>
+      <div class="dx-text" id="dxText">—</div>
     </div>
 
-    <div class="points-card">
-      <div class="points-card-info">
-        <h3>Your Points</h3>
-        <p>5 pts per goal · 15 pts max per day · progress saves automatically</p>
-      </div>
-      <div class="points-big" id="totalPointsDisplay">0<span>total points</span></div>
-    </div>
 
-    <div class="daily-card">
-      <div class="daily-header">
-        <div class="daily-meta">
-          <div class="week-tag" id="weekTag">Week 1</div>
-          <div class="day-title" id="dayTitle">Day 1</div>
+
+    <div class="day-section" id="daySection">
+      <div class="day-nav-top">
+        <div class="day-nav-info">
+          <div class="day-week-label" id="weekLabel">Week 1</div>
+          <div class="day-number-label" id="dayLabel">Day 1</div>
         </div>
-        <div class="day-points-today">
-          <div class="pts-num" id="todayPointsNum">0</div>
-          <span class="pts-label">today's pts</span>
+        <div class="day-nav-buttons">
+          <button class="nav-arrow" id="prevBtn" onclick="changeDay(-1)" disabled>←</button>
+          <button class="nav-arrow" id="nextBtn" onclick="changeDay(1)">→</button>
         </div>
       </div>
 
-      <div class="goals-list" id="goalsList"></div>
+      <div class="thin-progress">
+        <div class="thin-progress-fill" id="thinFill" style="width:3.3%"></div>
+      </div>
 
-      <div class="day-nav">
-        <button class="btn-nav" id="prevBtn" onclick="changeDay(-1)" disabled>← Prev Day</button>
-        <div class="day-progress">
-          <div id="dayProgressText">Day 1 of 30</div>
-          <div class="progress-bar-wrap" style="margin:6px auto 0">
-            <div class="progress-bar-fill" id="progressFill" style="width:3.3%"></div>
-          </div>
-        </div>
-        <button class="btn-nav" id="nextBtn" onclick="changeDay(1)">Next Day →</button>
+      <div class="goals-area" id="goalsArea"></div>
+
+      <div class="today-pts-line">
+        <span id="dayProgressText">Day 1 of 30</span>
       </div>
     </div>
 
-    <div class="lockin-card">
-      <div class="lockin-icon">🔒</div>
-      <h2>Ready to lock in?</h2>
-      <div class="commitment-text" id="commitmentText">Loading...</div>
+    <div class="journal-section" id="journalSection">
+      <div class="journal-label">Today's Notes</div>
+      <textarea class="journal-field" id="journalField" placeholder="How did today go? What did you do, feel, or notice..."></textarea>
+      <div class="journal-saved" id="journalSaved"></div>
+    </div>
+
+    <div class="lockin-section" id="lockinSection">
+      <div class="lockin-eyebrow">Your Commitment</div>
+      <div class="lockin-title">Ready to lock in?</div>
+      <div class="commitment-quote" id="commitmentQuote">Loading...</div>
       <div class="lockin-input-row">
-        <input type="text" id="lockinInput" placeholder="Type &quot;I'm in&quot; to commit"/>
+        <input class="lockin-field" id="lockinField" placeholder="Type &quot;I'm in&quot;" />
         <button class="btn-lockin" onclick="handleLockin()">Lock In</button>
       </div>
-      <div class="locked-confirmation" id="lockedConfirmation">✓ &nbsp;You're locked in. Day 1 starts now.</div>
+      <div class="locked-msg" id="lockedMsg">✓ You're locked in. Day 1 starts now.</div>
     </div>
 
-    <div class="support-card" id="supportCard">
-      <h3>Need support?</h3>
-      <div class="card-sub" style="margin-bottom:16px;">Ask anything about your plan. <span id="supportCallsLeft"></span></div>
+    <div class="support-section" id="supportSection">
+      <div class="support-label">Support</div>
       <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-input-row">
-        <input type="text" id="chatInput" placeholder="Ask a question about your plan..." onkeydown="if(event.key==='Enter') sendChat()"/>
+        <input class="chat-field" id="chatField" placeholder="Ask anything about your plan..." onkeydown="if(event.key==='Enter') sendChat()"/>
         <button class="btn-send" id="sendBtn" onclick="sendChat()">Send</button>
       </div>
-      <div class="calls-warning" id="callsWarning"></div>
+      <div class="support-note" id="supportNote"></div>
     </div>
 
-    <button class="btn-reset" onclick="resetApp()">Start Over</button>
+    <div class="reset-line">
+      <button class="btn-reset" onclick="resetApp()">Start over</button>
+    </div>
+
   </div>
 
 </div>
 <script>
   const PROXY_URL     = 'https://us-central1-brophy-ai-api.cloudfunctions.net/brophyProxy';
   const STUDENT_EMAIL = 'jselk27@brophybroncos.org';
-  const STORAGE_KEY   = 'breakfree_v2';
+  const STORAGE_KEY   = 'breakfree_v3';
 
-  let planDays = [];
-  let progress = { currentDay: 0, totalPoints: 0, dayData: {} };
-  let planContext = '';
-  let chatHistory = [];
-  let supportCallsUsed = 0;
-  const MAX_SUPPORT_CALLS = 1;
+  // ── QUESTIONS ──
+  const QUESTIONS = [
+    {
+      id: 'name', type: 'text',
+      label: 'Question 1',
+      text: "What's your first name?",
+      placeholder: 'Your name...',
+      required: true
+    },
+    {
+      id: 'habit', type: 'options',
+      label: 'Question 2',
+      text: "What's your biggest habit right now?",
+      options: [
+        'Social media', 'Gaming', 'YouTube / streaming',
+        'My phone in general', 'Junk food / snacking', 'Vaping / nicotine', 'Something else'
+      ]
+    },
+    {
+      id: 'habitOther', type: 'text',
+      label: 'Question 2b',
+      text: "Tell us a bit more about it.",
+      placeholder: 'Describe your habit...',
+      required: false,
+      onlyIf: (a) => a.habit === 'Something else'
+    },
+    {
+      id: 'frequency', type: 'options',
+      label: 'Question 3',
+      text: "How often does it happen?",
+      options: ['A few times a week', 'Every day', 'Multiple times a day', 'Almost constantly']
+    },
+    {
+      id: 'trigger', type: 'text',
+      label: 'Question 4',
+      text: "What usually triggers it?",
+      placeholder: 'Boredom, stress, after school...',
+      required: false
+    },
+    {
+      id: 'impact', type: 'textarea',
+      label: 'Question 5',
+      text: "How has it affected your life?",
+      placeholder: 'Sleep, grades, relationships...',
+      required: false
+    },
+    {
+      id: 'attempts', type: 'text',
+      label: 'Question 6',
+      text: "Have you tried to stop before? What happened?",
+      placeholder: 'Deleted the app, lasted a day...',
+      required: false
+    },
+    {
+      id: 'seriousness', type: 'serious',
+      label: 'Last one',
+      text: "How serious are you about breaking this?",
+      options: [
+        { value: 'high', emoji: '🔥', title: "I'm fully committed", desc: 'Give me a tough, no-excuses plan' },
+        { value: 'low',  emoji: '🌱', title: 'Taking it step by step', desc: 'Start gentle, build from there' }
+      ]
+    }
+  ];
 
-  // ── LOAD SAVED ──
-  function loadSaved() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return;
-      const d = JSON.parse(saved);
-      if (!d.planDays || d.planDays.length !== 30) return;
-      planDays   = d.planDays;
-      progress   = d.progress || { currentDay: 0, totalPoints: 0, dayData: {} };
-      planContext = d.planContext || '';
-      document.getElementById('heroSection').style.display = 'none';
-      document.getElementById('formCard').style.display    = 'none';
-      document.getElementById('resultsScreen').style.display = 'block';
-      document.getElementById('diagnosisTitle').textContent = d.diagnosisTitle || '';
-      document.getElementById('diagnosisText').textContent  = d.diagnosisText  || '';
-      document.getElementById('commitmentText').textContent = d.commitmentStatement || '';
-      document.getElementById('lockedConfirmation').style.display = 'flex';
-      document.getElementById('lockinInput').disabled = true;
-      document.getElementById('lockinInput').value    = "I'm in ✓";
-      document.querySelector('.btn-lockin').disabled  = true;
-      document.getElementById('supportCard').style.display = 'block';
-      document.getElementById('pointsBadge').style.display = 'flex';
-      updateSupportCallsDisplay();
-      renderDay(progress.currentDay);
-      updatePointsUI();
-    } catch(e) { console.log('No saved data'); }
+  // ── STATE ──
+  let answers      = {};
+  let currentQ     = 0;
+  let visibleQs    = [];
+  let planDays     = [];
+  let progress     = { currentDay: 0, totalPoints: 0, dayData: {} };
+  let planContext  = '';
+  let chatHistory  = [];
+  let supportUsed  = 0;
+  const MAX_SUPPORT = 1;
+
+  // ── BOOT ──
+  function init() {
+    const saved = loadSaved();
+    if (!saved) return;
+    showPlanScreen();
   }
 
-  function saveProgress() {
+  function loadSaved() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      const d = JSON.parse(raw);
+      if (!d.planDays || d.planDays.length !== 30) return false;
+      planDays    = d.planDays;
+      progress    = d.progress || { currentDay:0, totalPoints:0, dayData:{} };
+      planContext  = d.planContext || '';
+      document.getElementById('dxTitle').textContent         = d.diagnosisTitle || '';
+      document.getElementById('dxText').textContent          = d.diagnosisText  || '';
+      document.getElementById('commitmentQuote').textContent = d.commitmentStatement || '';
+      if (d.locked) {
+        document.getElementById('lockedMsg').style.display  = 'block';
+        document.getElementById('lockinField').disabled     = true;
+        document.getElementById('lockinField').value        = "I'm in ✓";
+        document.querySelector('.btn-lockin').disabled      = true;
+        document.getElementById('supportSection').style.display = 'block';
+        updateSupportNote();
+      }
+      return true;
+    } catch(e) { return false; }
+  }
+
+  function saveProgress(extra = {}) {
+    try {
+      const base = {
         planDays, progress, planContext,
-        diagnosisTitle:       document.getElementById('diagnosisTitle').textContent,
-        diagnosisText:        document.getElementById('diagnosisText').textContent,
-        commitmentStatement:  document.getElementById('commitmentText').textContent,
-      }));
+        diagnosisTitle:      document.getElementById('dxTitle').textContent,
+        diagnosisText:       document.getElementById('dxText').textContent,
+        commitmentStatement: document.getElementById('commitmentQuote').textContent,
+        locked: document.getElementById('lockedMsg').style.display === 'block',
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...base, ...extra }));
     } catch(e) {}
   }
 
-  document.getElementById('habit').addEventListener('change', function() {
-    document.getElementById('otherGroup').style.display = this.value === 'Other' ? 'flex' : 'none';
-  });
+  // ── LANDING ──
+  function startJourney() {
+    document.getElementById('landingScreen').style.display = 'none';
+    document.getElementById('interviewScreen').style.display = 'block';
+    buildVisibleQs();
+    renderQuestion(0);
+  }
 
-  // ── PROXY ──
-  async function callProxy(messages, system = '') {
-    const body = { messages, max_tokens: 1500 };
-    if (system) body.system = system;
-    const res = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-student-email': STUDENT_EMAIL },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error || `Error ${res.status}`); }
-    const data = await res.json();
-    if (data._brophy) {
-      const r = data._brophy.callsRemaining;
-      document.getElementById('callsText').textContent = `${r} calls left`;
-      const dot = document.querySelector('.calls-badge .dot');
-      if (r <= 5) dot.style.background = '#ffaa4d';
-      if (r <= 2) dot.style.background = '#ff6b6b';
+  function buildVisibleQs() {
+    visibleQs = QUESTIONS.filter(q => !q.onlyIf || q.onlyIf(answers));
+  }
+
+  // ── INTERVIEW ──
+  function renderQuestion(index) {
+    currentQ = index;
+    buildVisibleQs();
+    const q = visibleQs[index];
+    if (!q) return;
+
+    const total = visibleQs.length;
+    document.getElementById('progressFill').style.width = `${((index) / total) * 100}%`;
+    document.getElementById('progressLabel').textContent = `${index + 1} of ${total}`;
+
+    const wrap = document.getElementById('questionWrap');
+    wrap.style.opacity = '0';
+    wrap.style.transform = 'translateY(12px)';
+
+    setTimeout(() => {
+      let html = `<div class="question-label">${q.label}</div>
+                  <div class="question-text">${q.text}</div>`;
+
+      if (q.type === 'text') {
+        const val = answers[q.id] || '';
+        html += `<div class="text-answer-wrap">
+          <input class="text-answer" id="answerInput" value="${val}" placeholder="${q.placeholder || ''}" onkeydown="if(event.key==='Enter') nextQuestion()" oninput="onInputChange()" autofocus/>
+        </div>`;
+      } else if (q.type === 'textarea') {
+        const val = answers[q.id] || '';
+        html += `<div class="text-answer-wrap">
+          <textarea class="textarea-answer" id="answerInput" placeholder="${q.placeholder || ''}" oninput="onInputChange()">${val}</textarea>
+        </div>`;
+      } else if (q.type === 'options') {
+        html += `<div class="options-grid" id="optionsGrid">`;
+        q.options.forEach(opt => {
+          const sel = answers[q.id] === opt ? 'selected' : '';
+          html += `<button class="option-btn ${sel}" onclick="selectOption(event,'${q.id}', '${opt.replace(/'/g,"&#39;")}')">${opt}</button>`;
+        });
+        html += `</div>`;
+      } else if (q.type === 'serious') {
+        html += `<div class="options-grid" id="optionsGrid">`;
+        q.options.forEach(opt => {
+          const sel = answers[q.id] === opt.value ? 'selected' : '';
+          html += `<button class="option-btn serious-btn ${sel}" onclick="selectOption(event,'${q.id}', '${opt.value}')">
+            <span class="s-emoji">${opt.emoji}</span>
+            <span class="s-title">${opt.title}</span>
+            <span class="s-desc">${opt.desc}</span>
+          </button>`;
+        });
+        html += `</div>`;
+      }
+
+      const isLast = index === visibleQs.length - 1;
+      const canProceed = answers[q.id] || !q.required;
+      const nextLabel  = isLast ? 'Build My Plan →' : 'Continue →';
+
+      html += `<div style="display:flex;align-items:center;margin-top:8px;">`;
+      if (index > 0) html += `<button class="btn-back" onclick="prevQuestion()">← Back</button>`;
+      html += `<button class="btn-next" id="nextBtn" onclick="nextQuestion()" ${canProceed || q.type !== 'text' ? '' : 'disabled'}>${nextLabel}</button>`;
+      html += `</div>`;
+
+      wrap.innerHTML = html;
+
+      requestAnimationFrame(() => {
+        wrap.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        wrap.style.opacity    = '1';
+        wrap.style.transform  = 'translateY(0)';
+      });
+
+      const inp = document.getElementById('answerInput');
+      if (inp && q.type === 'text') setTimeout(() => inp.focus(), 50);
+
+    }, 80);
+  }
+
+  function onInputChange() {
+    const q   = visibleQs[currentQ];
+    const inp = document.getElementById('answerInput');
+    const btn = document.getElementById('nextBtn');
+    if (!inp || !btn) return;
+    if (q.required) btn.disabled = !inp.value.trim();
+  }
+
+  function selectOption(e, id, value) {
+    answers[id] = value;
+    buildVisibleQs();
+    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    e.currentTarget.classList.add('selected');
+    setTimeout(() => nextQuestion(), 280);
+  }
+
+  function nextQuestion() {
+    const q   = visibleQs[currentQ];
+    const inp = document.getElementById('answerInput');
+    if (inp) answers[q.id] = inp.value.trim();
+
+    if (q.required && !answers[q.id]) {
+      document.getElementById('errorMsg').textContent = 'Please answer this question to continue.';
+      document.getElementById('errorMsg').style.display = 'block';
+      return;
     }
-    return data.content[0].text;
+    document.getElementById('errorMsg').style.display = 'none';
+
+    buildVisibleQs();
+    const next = currentQ + 1;
+
+    if (next >= visibleQs.length) {
+      submitAnswers();
+    } else {
+      renderQuestion(next);
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQ > 0) renderQuestion(currentQ - 1);
+  }
+
+  // ── SUBMIT ──
+  async function submitAnswers() {
+    document.getElementById('interviewScreen').style.display = 'none';
+    document.getElementById('loadingScreen').style.display   = 'block';
+
+    const name       = answers.name || 'Friend';
+    const habit      = answers.habit === 'Something else' ? (answers.habitOther || 'unspecified habit') : (answers.habit || 'phone');
+    const frequency  = answers.frequency || 'daily';
+    const trigger    = answers.trigger   || 'not specified';
+    const impact     = answers.impact    || 'not specified';
+    const attempts   = answers.attempts  || 'none';
+    const seriousness = answers.seriousness || 'low';
+
+    const tone = seriousness === 'high'
+      ? 'The user is fully committed. Make goals challenging and direct.'
+      : 'The user wants to ease in gently. Make goals encouraging and low-pressure.';
+
+    const system = `You are BreakFree, an empathetic AI habit coach for teenagers. ${tone}
+CRITICAL: Respond ONLY with a raw JSON object. No markdown, no backticks, no text before or after. Start with { end with }.`;
+
+    const prompt = `Diagnose this teenager's habit and generate a 30-day recovery plan.
+
+USER:
+- Name: ${name}, Habit: ${habit}, Frequency: ${frequency}
+- Triggers: ${trigger}, Impact: ${impact}
+- Previous attempts: ${attempts}
+- Commitment: ${seriousness === 'high' ? 'Fully committed, wants tough plan' : 'Gentle start, wants encouraging plan'}
+
+Return ONLY this raw JSON:
+{
+  "diagnosisTitle": "punchy name for their addiction pattern (3-5 words)",
+  "diagnosisText": "2 sentences on what is really going on. Direct and real.",
+  "commitmentStatement": "One powerful sentence written directly to ${name} about breaking this habit.",
+  "week1Title": "Week 1 theme",
+  "week1Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
+  "week2Title": "Week 2 theme",
+  "week2Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
+  "week3Title": "Week 3 theme",
+  "week3Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
+  "week4Title": "Week 4 theme",
+  "week4Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"]
+}
+Each array = exactly 21 strings (7 days x 3 goals). Each goal: single short string, NO newlines, NO line breaks, under 12 words, specific and actionable. Goals get harder each week. Personal to ${name}'s habit.`;
+
+    try {
+      const raw    = await callProxy([{ role:'user', content: prompt }], system);
+      const parsed = parseJSON(raw);
+
+      planDays    = buildPlanDays(parsed);
+      progress    = { currentDay:0, totalPoints:0, dayData:{} };
+      planContext  = `User: ${name}, Habit: ${habit}. Plan: ${parsed.week1Title}, ${parsed.week2Title}, ${parsed.week3Title}, ${parsed.week4Title}.`;
+
+      document.getElementById('dxTitle').textContent         = parsed.diagnosisTitle || 'Your Habit Pattern';
+      document.getElementById('dxText').textContent          = parsed.diagnosisText  || '';
+      document.getElementById('commitmentQuote').textContent = parsed.commitmentStatement || '';
+
+      document.getElementById('loadingScreen').style.display = 'none';
+      showPlanScreen();
+      saveProgress();
+
+    } catch(err) {
+      document.getElementById('loadingScreen').style.display   = 'none';
+      document.getElementById('interviewScreen').style.display = 'block';
+      document.getElementById('errorMsg').textContent = err.message || 'Something went wrong. Please try again.';
+      document.getElementById('errorMsg').style.display = 'block';
+    }
+  }
+
+  // ── SHOW PLAN ──
+  function showPlanScreen() {
+    document.getElementById('landingScreen').style.display    = 'none';
+    document.getElementById('interviewScreen').style.display  = 'none';
+    document.getElementById('loadingScreen').style.display    = 'none';
+    document.getElementById('planScreen').style.display       = 'block';
+    document.getElementById('pointsBadge').style.display      = 'flex';
+    renderDay(progress.currentDay);
+    updatePointsUI();
   }
 
   // ── PARSE JSON ──
@@ -755,11 +1182,8 @@
     let c = raw.replace(/```json|```/gi,'').trim();
     const m = c.match(/\{[\s\S]*\}/);
     if (m) c = m[0];
-    // Sanitize: remove newlines and extra spaces inside JSON string values
-    // Replace literal newlines inside quoted strings with a space
-    c = c.replace(/"([^"]*)"/g, (match, inner) => {
-      return '"' + inner.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim() + '"';
-    });
+    // Strip newlines inside string values
+    c = c.replace(/"([^"]*)"/g, (_,inner) => '"' + inner.replace(/[\r\n]+/g,' ').replace(/\s+/g,' ').trim() + '"');
     try { return JSON.parse(c); } catch(e) {
       let r = c.trimEnd();
       if (!r.endsWith('}')) {
@@ -770,16 +1194,15 @@
     }
   }
 
-  // ── BUILD 30 DAYS ──
   function buildPlanDays(parsed) {
     const days = [];
     [
-      { num:1, title: parsed.week1Title||'Week 1', goals: parsed.week1Goals||[] },
-      { num:2, title: parsed.week2Title||'Week 2', goals: parsed.week2Goals||[] },
-      { num:3, title: parsed.week3Title||'Week 3', goals: parsed.week3Goals||[] },
-      { num:4, title: parsed.week4Title||'Week 4', goals: parsed.week4Goals||[] },
+      { num:1, title:parsed.week1Title||'Week 1', goals:parsed.week1Goals||[] },
+      { num:2, title:parsed.week2Title||'Week 2', goals:parsed.week2Goals||[] },
+      { num:3, title:parsed.week3Title||'Week 3', goals:parsed.week3Goals||[] },
+      { num:4, title:parsed.week4Title||'Week 4', goals:parsed.week4Goals||[] },
     ].forEach(w => {
-      for (let d = 0; d < 7; d++) {
+      for (let d=0; d<7; d++) {
         days.push({
           weekNum: w.num, weekTitle: w.title,
           goals: [
@@ -793,131 +1216,64 @@
     return days;
   }
 
-  // ── SUBMIT ──
-  async function handleSubmit() {
-    const name       = document.getElementById('name').value.trim();
-    const age        = document.getElementById('age').value;
-    const habitRaw   = document.getElementById('habit').value;
-    const habitOther = document.getElementById('habitOther').value.trim();
-    const habit      = habitRaw === 'Other' ? (habitOther||'unspecified habit') : habitRaw;
-    const duration   = document.getElementById('duration').value;
-    const frequency  = document.getElementById('frequency').value;
-    const trigger    = document.getElementById('trigger').value.trim();
-    const impact     = document.getElementById('impact').value.trim();
-    const attempts   = document.getElementById('attempts').value.trim();
-    const sEl        = document.querySelector('input[name="seriousness"]:checked');
-    const seriousness = sEl ? sEl.value : '';
-
-    if (!name||!age||!habitRaw||!duration||!frequency||!seriousness) {
-      showError('Please fill out all fields, including how serious you are.');
-      return;
-    }
-
-    document.getElementById('formCard').style.display    = 'none';
-    document.getElementById('heroSection').style.display = 'none';
-    document.getElementById('loadingScreen').style.display = 'block';
-    document.getElementById('errorMsg').style.display    = 'none';
-
-    const tone = seriousness === 'high'
-      ? 'The user is fully committed. Make goals challenging and direct.'
-      : 'The user wants to ease in gently. Make goals encouraging and low-pressure.';
-
-    const system = `You are BreakFree, an empathetic AI habit coach for teenagers. ${tone}
-CRITICAL: Respond ONLY with a raw JSON object. No markdown, no backticks, no text before or after. Start with { end with }.`;
-
-    const prompt = `Diagnose this teenager's habit and generate a 30-day recovery plan with 3 specific daily goals per day.
-
-USER:
-- Name: ${name}, Age: ${age}
-- Habit: ${habit}, Duration: ${duration}, Frequency: ${frequency}
-- Triggers: ${trigger||'not specified'}
-- Impact: ${impact||'not specified'}
-- Previous attempts: ${attempts||'none'}
-- Commitment: ${seriousness === 'high' ? 'Fully committed, wants tough plan' : 'Gentle start, wants encouraging plan'}
-
-Return ONLY this raw JSON (no markdown):
-{
-  "diagnosisTitle": "punchy name for their addiction pattern",
-  "diagnosisText": "2 sentences on what is really going on psychologically. Direct and real.",
-  "commitmentStatement": "One powerful sentence written directly to ${name} about breaking this habit.",
-  "week1Title": "Week 1 theme",
-  "week1Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
-  "week2Title": "Week 2 theme",
-  "week2Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
-  "week3Title": "Week 3 theme",
-  "week3Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"],
-  "week4Title": "Week 4 theme",
-  "week4Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"]
-}
-Each array has exactly 21 strings (7 days x 3 goals). Each goal must be a single short string under 12 words with NO line breaks, NO newlines, NO special characters. Goals get harder each week. Make them personal to ${name}'s habit and triggers. CRITICAL: Every string in the array must be on one line with no line breaks inside strings.`;
-
-    try {
-      const raw    = await callProxy([{ role:'user', content: prompt }], system);
-      const parsed = parseJSON(raw);
-
-      planDays  = buildPlanDays(parsed);
-      progress  = { currentDay: 0, totalPoints: 0, dayData: {} };
-      planContext = `User: ${name}, Age: ${age}, Habit: ${habit}. Weeks: ${parsed.week1Title}, ${parsed.week2Title}, ${parsed.week3Title}, ${parsed.week4Title}.`;
-
-      document.getElementById('diagnosisTitle').textContent = parsed.diagnosisTitle || 'Your Habit Pattern';
-      document.getElementById('diagnosisText').textContent  = parsed.diagnosisText  || '';
-      document.getElementById('commitmentText').textContent = parsed.commitmentStatement || '';
-
-      document.getElementById('loadingScreen').style.display  = 'none';
-      document.getElementById('resultsScreen').style.display  = 'block';
-      document.getElementById('pointsBadge').style.display    = 'flex';
-
-      renderDay(0);
-      updatePointsUI();
-      saveProgress();
-
-    } catch(err) {
-      document.getElementById('loadingScreen').style.display  = 'none';
-      document.getElementById('heroSection').style.display    = 'block';
-      document.getElementById('formCard').style.display       = 'block';
-      showError(err.message || 'Something went wrong. Please try again.');
-    }
-  }
-
   // ── RENDER DAY ──
   function renderDay(index) {
     if (!planDays[index]) return;
     const day    = planDays[index];
     const dayNum = index + 1;
-    document.getElementById('weekTag').textContent       = `${day.weekTitle} · Week ${day.weekNum}`;
-    document.getElementById('dayTitle').textContent      = `Day ${dayNum}`;
-    document.getElementById('dayProgressText').textContent = `Day ${dayNum} of 30`;
-    document.getElementById('progressFill').style.width  = `${(dayNum/30)*100}%`;
+
+    document.getElementById('weekLabel').textContent      = `${day.weekTitle} · Week ${day.weekNum}`;
+    document.getElementById('dayLabel').textContent       = `Day ${dayNum}`;
+    document.getElementById('dayProgressText').textContent= `Day ${dayNum} of 30`;
+    document.getElementById('thinFill').style.width       = `${(dayNum/30)*100}%`;
     document.getElementById('prevBtn').disabled = index === 0;
     document.getElementById('nextBtn').disabled = index === 29;
 
+    // Load journal entry for this day
+    const jField = document.getElementById('journalField');
+    const jSaved = document.getElementById('journalSaved');
+    const saved2 = progress.dayData[index] || {};
+    jField.value = saved2.journal || '';
+    jSaved.textContent = '';
+    jField.oninput = () => {
+      clearTimeout(jField._timer);
+      jField._timer = setTimeout(() => {
+        if (!progress.dayData[index]) progress.dayData[index] = { completed:[false,false,false], points:0 };
+        progress.dayData[index].journal = jField.value;
+        saveProgress();
+        jSaved.textContent = 'Saved ✓';
+        setTimeout(() => { jSaved.textContent = ''; }, 2000);
+      }, 800);
+    };
+
     const saved = progress.dayData[index] || { completed:[false,false,false], points:0 };
-    const list  = document.getElementById('goalsList');
-    list.innerHTML = '';
+    const area  = document.getElementById('goalsArea');
+    area.innerHTML = '';
 
     day.goals.forEach((goal, gi) => {
       const done = saved.completed[gi] || false;
-      const item = document.createElement('div');
-      item.className = `goal-item${done?' completed':''}`;
-      item.innerHTML = `
-        <div class="goal-checkbox">${done ? '✓' : ''}</div>
-        <div class="goal-text">${goal}</div>
-        <div class="goal-points">+5 pts</div>`;
-      item.addEventListener('click', () => toggleGoal(index, gi));
-      list.appendChild(item);
+      const row  = document.createElement('div');
+      row.className = `goal-row${done?' done':''}`;
+      row.innerHTML = `
+        <div class="goal-check-circle">${done ? '✓' : ''}</div>
+        <div class="goal-body">
+          <div class="goal-body-text">${goal}</div>
+          <div class="goal-pts-tag">+5 pts earned</div>
+        </div>`;
+      row.addEventListener('click', () => toggleGoal(index, gi));
+      area.appendChild(row);
     });
 
-    const pts = (saved.completed.filter(Boolean).length) * 5;
-    document.getElementById('todayPointsNum').textContent = pts;
+
   }
 
   function toggleGoal(dayIndex, goalIndex) {
     if (!progress.dayData[dayIndex])
       progress.dayData[dayIndex] = { completed:[false,false,false], points:0 };
-    const d = progress.dayData[dayIndex];
+    const d   = progress.dayData[dayIndex];
     const was = d.completed[goalIndex];
     d.completed[goalIndex] = !was;
-    progress.totalPoints += was ? -5 : 5;
+    progress.totalPoints  += was ? -5 : 5;
     if (progress.totalPoints < 0) progress.totalPoints = 0;
     d.points = d.completed.filter(Boolean).length * 5;
     updatePointsUI();
@@ -927,12 +1283,11 @@ Each array has exactly 21 strings (7 days x 3 goals). Each goal must be a single
 
   function updatePointsUI() {
     const pts = progress.totalPoints;
-    document.getElementById('totalPointsDisplay').innerHTML = `${pts}<span>total points</span>`;
     document.getElementById('headerPoints').textContent = pts;
-    const el = document.getElementById('totalPointsDisplay');
-    el.classList.remove('pop');
-    void el.offsetWidth;
-    el.classList.add('pop');
+    const badge = document.getElementById('pointsBadge');
+    badge.classList.remove('pop');
+    void badge.offsetWidth;
+    badge.classList.add('pop');
   }
 
   function changeDay(dir) {
@@ -941,66 +1296,63 @@ Each array has exactly 21 strings (7 days x 3 goals). Each goal must be a single
     progress.currentDay = next;
     renderDay(next);
     saveProgress();
-    document.querySelector('.daily-card').scrollIntoView({ behavior:'smooth', block:'start' });
+    document.getElementById('daySection').scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
   // ── LOCK IN ──
   function handleLockin() {
-    const val = document.getElementById('lockinInput').value.trim().toLowerCase().replace(/['']/g,"'");
+    const val = document.getElementById('lockinField').value.trim().toLowerCase().replace(/['']/g,"'");
     if (val === "i'm in" || val === "im in") {
-      document.getElementById('lockedConfirmation').style.display = 'flex';
-      document.getElementById('lockinInput').disabled = true;
-      document.querySelector('.btn-lockin').disabled  = true;
-      document.getElementById('lockinInput').value    = "I'm in ✓";
+      document.getElementById('lockedMsg').style.display  = 'block';
+      document.getElementById('lockinField').disabled     = true;
+      document.querySelector('.btn-lockin').disabled      = true;
+      document.getElementById('lockinField').value        = "I'm in ✓";
       setTimeout(() => {
-        document.getElementById('supportCard').style.display = 'block';
-        updateSupportCallsDisplay();
-        document.getElementById('supportCard').scrollIntoView({ behavior:'smooth', block:'start' });
-      }, 800);
+        document.getElementById('supportSection').style.display = 'block';
+        updateSupportNote();
+        document.getElementById('supportSection').scrollIntoView({ behavior:'smooth', block:'start' });
+      }, 700);
       saveProgress();
     } else {
-      document.getElementById('lockinInput').style.borderColor = 'var(--accent)';
-      document.getElementById('lockinInput').placeholder = "Type exactly: I'm in";
-      setTimeout(() => { document.getElementById('lockinInput').style.borderColor = ''; }, 1400);
+      document.getElementById('lockinField').style.borderBottomColor = 'var(--accent)';
+      document.getElementById('lockinField').placeholder = "Type exactly: I'm in";
+      setTimeout(() => { document.getElementById('lockinField').style.borderBottomColor = ''; }, 1400);
     }
   }
 
   // ── SUPPORT ──
-  function updateSupportCallsDisplay() {
-    const r = MAX_SUPPORT_CALLS - supportCallsUsed;
-    document.getElementById('supportCallsLeft').textContent =
-      r > 0 ? `${r} support message${r===1?'':'s'} remaining.` : 'No support messages remaining.';
+  function updateSupportNote() {
+    const r = MAX_SUPPORT - supportUsed;
+    document.getElementById('supportNote').textContent =
+      r > 0 ? `${r} support message remaining.` : "You've used your support message. Trust your plan — you've got this.";
     if (r <= 0) {
-      document.getElementById('chatInput').disabled = true;
+      document.getElementById('chatField').disabled = true;
       document.getElementById('sendBtn').disabled   = true;
-      document.getElementById('callsWarning').style.display = 'block';
-      document.getElementById('callsWarning').textContent   = "You've used your support message. Trust your plan — you've got this.";
     }
   }
 
   async function sendChat() {
-    const input = document.getElementById('chatInput');
-    const msg   = input.value.trim();
-    if (!msg || supportCallsUsed >= MAX_SUPPORT_CALLS) return;
-    input.value = '';
-    addMessage('user', msg);
+    const field = document.getElementById('chatField');
+    const msg   = field.value.trim();
+    if (!msg || supportUsed >= MAX_SUPPORT) return;
+    field.value = '';
+    addMsg('user', msg);
     document.getElementById('sendBtn').disabled = true;
-    chatHistory.push({ role:'user', content: msg });
-    const system = `You are BreakFree, a supportive AI habit coach. Context: ${planContext}. Keep responses 3-5 sentences, warm, direct, actionable.`;
+    chatHistory.push({ role:'user', content:msg });
+    const sys = `You are BreakFree, a supportive AI habit coach. Context: ${planContext}. Keep responses 3-5 sentences, warm, direct, actionable.`;
     try {
-      const reply = await callProxy(chatHistory, system);
-      chatHistory.push({ role:'assistant', content: reply });
-      addMessage('ai', reply);
-      supportCallsUsed++;
-    } catch(e) {
-      addMessage('ai', 'Something went wrong. Please try again.');
-    } finally {
+      const reply = await callProxy(chatHistory, sys);
+      chatHistory.push({ role:'assistant', content:reply });
+      addMsg('ai', reply);
+      supportUsed++;
+    } catch(e) { addMsg('ai','Something went wrong. Please try again.'); }
+    finally {
       document.getElementById('sendBtn').disabled = false;
-      updateSupportCallsDisplay();
+      updateSupportNote();
     }
   }
 
-  function addMessage(role, text) {
+  function addMsg(role, text) {
     const el = document.createElement('div');
     el.className = `msg ${role}`;
     el.textContent = text;
@@ -1008,33 +1360,84 @@ Each array has exactly 21 strings (7 days x 3 goals). Each goal must be a single
     el.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }
 
+  // ── PROXY ──
+  async function callProxy(messages, system='') {
+    const body = { messages, max_tokens:1500 };
+    if (system) body.system = system;
+    const res = await fetch(PROXY_URL, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'x-student-email': STUDENT_EMAIL },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error||`Error ${res.status}`); }
+    const data = await res.json();
+    if (data._brophy) {
+      const r = data._brophy.callsRemaining;
+      document.getElementById('callsText').textContent = `${r} calls left`;
+      const dot = document.querySelector('.calls-badge .dot');
+      if (r<=5) dot.style.background='#ffaa4d';
+      if (r<=2) dot.style.background='#ff6b6b';
+    }
+    return data.content[0].text;
+  }
+
   // ── RESET ──
   function resetApp() {
     if (!confirm('This will clear your progress and start over. Are you sure?')) return;
     localStorage.removeItem(STORAGE_KEY);
-    planDays=[]; progress={currentDay:0,totalPoints:0,dayData:{}}; chatHistory=[]; supportCallsUsed=0; planContext='';
-    document.getElementById('resultsScreen').style.display  = 'none';
-    document.getElementById('heroSection').style.display    = 'block';
-    document.getElementById('formCard').style.display       = 'block';
-    document.getElementById('lockedConfirmation').style.display = 'none';
-    document.getElementById('lockinInput').disabled = false;
-    document.getElementById('lockinInput').value    = '';
-    document.querySelector('.btn-lockin').disabled  = false;
-    document.getElementById('chatMessages').innerHTML = '';
-    document.getElementById('supportCard').style.display    = 'none';
-    document.getElementById('pointsBadge').style.display    = 'none';
-    document.getElementById('totalPointsDisplay').innerHTML = '0<span>total points</span>';
-    document.getElementById('headerPoints').textContent     = '0';
+    answers={}; planDays=[]; progress={currentDay:0,totalPoints:0,dayData:{}}; chatHistory=[]; supportUsed=0; planContext='';
+    document.getElementById('planScreen').style.display      = 'none';
+    document.getElementById('interviewScreen').style.display = 'none';
+    document.getElementById('landingScreen').style.display   = 'block';
+    document.getElementById('pointsBadge').style.display     = 'none';
+    document.getElementById('headerPoints').textContent      = '0';
+    document.getElementById('lockedMsg').style.display       = 'none';
+    document.getElementById('lockinField').disabled          = false;
+    document.getElementById('lockinField').value             = '';
+    document.querySelector('.btn-lockin').disabled           = false;
+    document.getElementById('chatMessages').innerHTML        = '';
+    document.getElementById('supportSection').style.display  = 'none';
     window.scrollTo({ top:0, behavior:'smooth' });
   }
 
-  function showError(msg) {
-    const el = document.getElementById('errorMsg');
-    el.textContent = msg;
-    el.style.display = 'block';
+  // ── DEMO MODE ──
+  function loadDemo() {
+    const demoGoals = (week) => {
+      const banks = {
+        1: ['Notice when you reach for your phone without thinking','Write down what you were feeling before you grabbed it','Set a 10pm phone curfew tonight'],
+        2: ['Delete one app you mindlessly open','Move social apps to a buried folder','Do one thing from your boredom list instead of scrolling'],
+        3: ['Spend 20 mins on something you actually enjoy','Text a friend instead of scrolling their story','No phone for the first 30 mins after waking up'],
+        4: ['Phone charges outside your bedroom tonight','Check messages at set times only — not constantly','Write one thing you are proud of this week'],
+      };
+      const b = banks[week];
+      const arr = [];
+      for (let i=0;i<7;i++) arr.push(...b);
+      return arr.slice(0,21);
+    };
+
+    const parsed = {
+      diagnosisTitle: 'Dopamine Scroll Loop',
+      diagnosisText: "Your brain has learned that boredom and stress mean it's time to scroll — it's not about the content, it's about escaping the feeling. The habit isn't really about your phone, it's about not having built ways to sit with uncomfortable emotions yet.",
+      commitmentStatement: "You already know this habit is costing you — now it's time to build something better in its place, one day at a time.",
+      week1Title: 'Awareness', week1Goals: demoGoals(1),
+      week2Title: 'Friction',  week2Goals: demoGoals(2),
+      week3Title: 'Replacement', week3Goals: demoGoals(3),
+      week4Title: 'Lock-In',  week4Goals: demoGoals(4),
+    };
+
+    planDays   = buildPlanDays(parsed);
+    progress   = { currentDay: 0, totalPoints: 0, dayData: {} };
+    planContext = 'Demo user. Habit: phone/social media.';
+
+    document.getElementById('dxTitle').textContent         = parsed.diagnosisTitle;
+    document.getElementById('dxText').textContent          = parsed.diagnosisText;
+    document.getElementById('commitmentQuote').textContent = parsed.commitmentStatement;
+
+    showPlanScreen();
+    document.getElementById('headerPoints').textContent = '0';
   }
 
-  loadSaved();
+  init();
 </script>
 </body>
 </html>
