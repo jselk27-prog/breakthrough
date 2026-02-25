@@ -755,6 +755,11 @@
     let c = raw.replace(/```json|```/gi,'').trim();
     const m = c.match(/\{[\s\S]*\}/);
     if (m) c = m[0];
+    // Sanitize: remove newlines and extra spaces inside JSON string values
+    // Replace literal newlines inside quoted strings with a space
+    c = c.replace(/"([^"]*)"/g, (match, inner) => {
+      return '"' + inner.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim() + '"';
+    });
     try { return JSON.parse(c); } catch(e) {
       let r = c.trimEnd();
       if (!r.endsWith('}')) {
@@ -844,7 +849,7 @@ Return ONLY this raw JSON (no markdown):
   "week4Title": "Week 4 theme",
   "week4Goals": ["goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal","goal"]
 }
-Each array has exactly 21 strings (7 days x 3 goals). Each goal under 12 words, specific and actionable. Goals get harder each week. Make them personal to ${name}'s habit and triggers.`;
+Each array has exactly 21 strings (7 days x 3 goals). Each goal must be a single short string under 12 words with NO line breaks, NO newlines, NO special characters. Goals get harder each week. Make them personal to ${name}'s habit and triggers. CRITICAL: Every string in the array must be on one line with no line breaks inside strings.`;
 
     try {
       const raw    = await callProxy([{ role:'user', content: prompt }], system);
