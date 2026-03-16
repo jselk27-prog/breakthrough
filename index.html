@@ -731,10 +731,82 @@
     @keyframes ptsPop { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
     .pop { animation: ptsPop 0.35s ease; }
 
-    @media (max-width: 560px) {
+    /* ── SAFETY BANNER ── */
+    .safety-banner {
+      width: 100%; max-width: 640px;
+      background: rgba(107,159,255,0.06);
+      border: 1px solid rgba(107,159,255,0.18);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-top: 32px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .safety-banner strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .safety-banner a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .safety-banner a:hover { text-decoration: underline; }
+
+    /* ── PRIVACY DISCLAIMER ── */
+    .privacy-note {
+      width: 100%; max-width: 640px;
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.6;
+      padding: 20px 0 0;
+      opacity: 0.7;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      width: 100%; max-width: 640px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+      padding: 40px 0 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      opacity: 0.6;
+      line-height: 1.7;
+    }
+
+    .site-footer a { color: var(--muted); }
+
+    /* ── RESPONSIVE FIXES ── */
+    @media (max-width: 640px) {
+      #app { padding: 0 16px 80px; }
+      .landing-title { font-size: 2.2rem; }
+      .question-text { font-size: 1.3rem; }
+      .dx-title { font-size: 1.6rem; }
+      .day-number-label { font-size: 1.3rem; }
       .options-grid { grid-template-columns: 1fr; }
-      .landing-title { font-size: 2.4rem; }
-      .pts-number { font-size: 2.4rem; }
+      .lockin-input-row { flex-direction: column; }
+      .chat-input-row { flex-direction: column; }
+      .btn-send { width: 100%; }
+      .day-nav-top { flex-wrap: wrap; gap: 12px; }
+      .lockin-section, .support-section { padding: 32px 0; }
+      header { padding: 20px 0 0; }
+    }
+
+    @media (max-width: 400px) {
+      .landing-title { font-size: 1.9rem; }
+      .btn-start { padding: 16px 32px; font-size: 0.9rem; }
+      .logo { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -759,6 +831,19 @@
     <p class="landing-sub">Answer a few questions and the AI will build you a personal 30-day recovery plan — with daily goals and a points system to keep you going.</p>
     <button class="btn-start" onclick="startJourney()">Start Your Journey →</button>
     <button class="btn-demo" onclick="loadDemo()">Preview Demo Plan</button>
+
+    <div class="safety-banner">
+      <strong>⚑ Need Support?</strong>
+      If anything you're working through feels overwhelming or you're struggling beyond a habit, 
+      Brophy offers on-campus counseling — contact <strong>Dean Pidgeon</strong> or <strong>Dr. Feeney</strong>. 
+      For immediate support, text or call <a href="tel:6022488336">Teen Lifeline at 602-248-8336</a>, 
+      or dial <a href="tel:988">988</a> for Arizona's suicide and crisis support line.
+    </div>
+
+    <div class="privacy-note">
+      This app does not store your data on any server. Everything stays on your device.<br/>
+      No personal information is collected, shared, or sold.
+    </div>
   </div>
 
   <!-- ── INTERVIEW ── -->
@@ -843,6 +928,12 @@
 
     <div class="reset-line">
       <button class="btn-reset" onclick="resetApp()">Start over</button>
+    </div>
+
+    <div class="site-footer">
+      BreakFree is a student-built wellness tool for Brophy College Prep.<br/>
+      If you need immediate support, call <a href="tel:6022488336">Teen Lifeline 602-248-8336</a> or dial <a href="tel:988">988</a>.<br/>
+      Contact Dean Pidgeon or Dr. Feeney for on-campus counseling.
     </div>
 
   </div>
