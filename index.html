@@ -395,6 +395,600 @@
 
     .pts-label-big strong { display: block; color: var(--text); font-size: 0.95rem; }
 
+    .plan-tabs-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(180deg, rgba(15,17,23,0.98) 0%, rgba(15,17,23,0.92) 100%);
+      backdrop-filter: blur(12px);
+      padding: 14px 0 18px;
+      margin: 0 0 28px;
+      border-bottom: 1px solid rgba(42,48,72,0.7);
+    }
+
+    .tab-bar,
+    .planner-view-toggle {
+      display: inline-flex;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 6px;
+      gap: 6px;
+    }
+
+    .planner-view-toggle {
+      margin-bottom: 26px;
+      background: var(--surface2);
+    }
+
+    .tab-btn,
+    .view-btn {
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--muted);
+      padding: 12px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .tab-btn.active,
+    .view-btn.active {
+      background: rgba(107,159,255,0.12);
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(107,159,255,0.2);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .section-card {
+      background: linear-gradient(180deg, rgba(22,27,39,0.92) 0%, rgba(30,36,53,0.88) 100%);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .dashboard-section {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-bottom: 24px;
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .dashboard-title {
+      font-family: 'Lora', serif;
+      font-size: 1.7rem;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+
+    .dashboard-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      min-height: 108px;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .stat-meta {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(107,159,255,0.08);
+      border: 1px solid rgba(107,159,255,0.18);
+      color: var(--accent2);
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .chart-card-title,
+    .quick-card-title,
+    .planner-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .week-chart {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+      align-items: end;
+      min-height: 190px;
+    }
+
+    .chart-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chart-bar-wrap {
+      width: 100%;
+      min-height: 132px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px 0 0;
+      border-bottom: 1px solid rgba(42,48,72,0.7);
+    }
+
+    .chart-bar {
+      width: 100%;
+      max-width: 28px;
+      min-height: 10px;
+      border-radius: 12px 12px 4px 4px;
+      background: linear-gradient(180deg, var(--accent) 0%, rgba(107,159,255,0.35) 100%);
+      transition: height 0.25s ease;
+    }
+
+    .chart-bar[data-level="full"] {
+      background: linear-gradient(180deg, var(--success) 0%, rgba(107,232,176,0.35) 100%);
+    }
+
+    .chart-bar[data-level="empty"] {
+      background: rgba(122,138,170,0.18);
+    }
+
+    .chart-day {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .chart-score {
+      font-size: 0.72rem;
+      color: var(--text);
+    }
+
+    .heatmap-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .heatmap-day {
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      border-radius: 14px;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .heatmap-day:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .heatmap-day.active {
+      box-shadow: inset 0 0 0 1px rgba(107,159,255,0.35);
+    }
+
+    .heatmap-day[data-level="partial"] {
+      background: rgba(107,159,255,0.3);
+      color: var(--text);
+    }
+
+    .heatmap-day[data-level="most"] {
+      background: rgba(107,159,255,0.65);
+      color: white;
+      border-color: rgba(107,159,255,0.7);
+    }
+
+    .heatmap-day[data-level="complete"] {
+      background: var(--success);
+      color: var(--bg);
+      border-color: rgba(107,232,176,0.45);
+    }
+
+    .heatmap-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .legend-swatch.partial {
+      background: rgba(107,159,255,0.3);
+      border-color: rgba(107,159,255,0.35);
+    }
+
+    .legend-swatch.most {
+      background: rgba(107,159,255,0.65);
+      border-color: rgba(107,159,255,0.7);
+    }
+
+    .legend-swatch.complete {
+      background: var(--success);
+      border-color: rgba(107,232,176,0.45);
+    }
+
+    .today-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .today-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+      align-items: center;
+    }
+
+    .today-card-copy {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .quick-goals {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quick-goal-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border: 1px solid rgba(42,48,72,0.8);
+      background: rgba(15,17,23,0.25);
+      border-radius: 16px;
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .quick-goal-row:hover {
+      border-color: var(--accent);
+      background: rgba(107,159,255,0.06);
+    }
+
+    .quick-goal-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 0.72rem;
+      color: var(--bg);
+      transition: all 0.2s;
+    }
+
+    .quick-goal-row.done .quick-goal-check {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+    }
+
+    .quick-goal-text {
+      flex: 1;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .quick-goal-row.done .quick-goal-text {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(122,138,170,0.4);
+    }
+
+    .planner-section {
+      padding-bottom: 24px;
+    }
+
+    .planner-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .planner-head-copy {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .planner-view {
+      display: none;
+    }
+
+    .planner-view.active {
+      display: block;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    .month-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .month-cell {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 18px;
+      min-height: 86px;
+      padding: 14px 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .month-cell:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .month-cell.active {
+      border-color: var(--accent);
+      background: rgba(107,159,255,0.08);
+    }
+
+    .month-day-num {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .month-status {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(122,138,170,0.35);
+      background: transparent;
+    }
+
+    .month-status.partial {
+      background: var(--gold);
+      border-color: rgba(255,209,102,0.35);
+    }
+
+    .month-status.full {
+      background: var(--success);
+      border-color: rgba(107,232,176,0.35);
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .week-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .week-card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    .week-card-title {
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .week-card-sub {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .week-goals {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .week-goal-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-radius: 14px;
+      border: 1px solid rgba(42,48,72,0.7);
+      padding: 10px 12px;
+      cursor: pointer;
+      background: rgba(15,17,23,0.2);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .week-goal-row:hover {
+      border-color: var(--accent);
+      background: rgba(107,159,255,0.06);
+    }
+
+    .week-goal-row.done {
+      background: rgba(107,159,255,0.08);
+    }
+
+    .week-goal-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 0.68rem;
+    }
+
+    .week-goal-row.done .week-goal-check {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .week-goal-text {
+      flex: 1;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .week-goal-row.done .week-goal-text {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(122,138,170,0.4);
+    }
+
+    .planner-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .planner-nav-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .planner-nav-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .planner-nav-title {
+      font-weight: 800;
+      font-size: 1.08rem;
+      line-height: 1.2;
+    }
+
+    .planner-nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-pill {
+      min-width: 108px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 0 18px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+
+    .nav-pill:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(107,159,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .nav-pill:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
     /* Day view — journal style */
     .day-section {
       animation: fadeUp 0.5s ease both;
@@ -522,6 +1116,49 @@
     .today-pts-val {
       font-weight: 800; font-size: 1rem;
       color: var(--gold);
+    }
+
+    .grace-wrap {
+      margin-top: 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .grace-btn,
+    .grace-badge {
+      border-radius: 999px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 10px 14px;
+    }
+
+    .grace-btn {
+      border: 1.5px solid var(--accent);
+      background: rgba(107,159,255,0.08);
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .grace-btn:hover {
+      background: rgba(107,159,255,0.14);
+      transform: translateY(-1px);
+    }
+
+    .grace-badge {
+      border: 1px solid rgba(107,232,176,0.25);
+      background: rgba(107,232,176,0.1);
+      color: var(--success);
+    }
+
+    .grace-copy {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      padding-top: 2px;
     }
 
     /* Journal */
@@ -801,12 +1438,40 @@
       .day-nav-top { flex-wrap: wrap; gap: 12px; }
       .lockin-section, .support-section { padding: 32px 0; }
       header { padding: 20px 0 0; }
+      .dashboard-header,
+      .planner-header,
+      .planner-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .planner-nav-buttons {
+        width: 100%;
+      }
+      .nav-pill {
+        flex: 1;
+        min-width: 0;
+      }
+      .month-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 400px) {
       .landing-title { font-size: 1.9rem; }
       .btn-start { padding: 16px 32px; font-size: 0.9rem; }
       .logo { font-size: 1.1rem; }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .month-cell {
+        min-height: 78px;
+        padding: 12px 10px;
+      }
+      .tab-btn,
+      .view-btn {
+        font-size: 0.82rem;
+        padding: 11px 10px;
+      }
     }
   </style>
 </head>
@@ -874,60 +1539,166 @@
       <div class="dx-text" id="dxText">—</div>
     </div>
 
+    <div class="plan-tabs-sticky">
+      <div class="tab-bar">
+        <button class="tab-btn" id="plannerTabBtn" onclick="switchPlanTab('planner')">Planner</button>
+        <button class="tab-btn active" id="dashboardTabBtn" onclick="switchPlanTab('dashboard')">Dashboard</button>
+      </div>
+    </div>
 
-
-    <div class="day-section" id="daySection">
-      <div class="day-nav-top">
-        <div class="day-nav-info">
-          <div class="day-week-label" id="weekLabel">Week 1</div>
-          <div class="day-number-label" id="dayLabel">Day 1</div>
+    <div class="tab-panel active" id="dashboardTab">
+      <div class="dashboard-section">
+        <div class="dashboard-header">
+          <div>
+            <div class="chart-card-title">Dashboard</div>
+            <div class="dashboard-title">Your 30-day momentum</div>
+            <div class="dashboard-sub" id="dashboardWeekLabel">Week 1 snapshot</div>
+          </div>
         </div>
-        <div class="day-nav-buttons">
-          <button class="nav-arrow" id="prevBtn" onclick="changeDay(-1)" disabled>←</button>
-          <button class="nav-arrow" id="nextBtn" onclick="changeDay(1)">→</button>
+
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-label">Current Streak</div>
+            <div class="stat-value" id="statStreak">0</div>
+            <div class="stat-meta">Consecutive days with all 3 goals completed.</div>
+            <div class="stat-badge" id="graceBadge">2 Grace Tokens remaining</div>
+            <div class="stat-meta">Use these to protect a missed day.</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Points</div>
+            <div class="stat-value" id="statPoints">0</div>
+            <div class="stat-meta">Every checked goal still earns 5 points.</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Completion Rate</div>
+            <div class="stat-value" id="statCompletionRate">0%</div>
+            <div class="stat-meta" id="statCompletionMeta">0 of 0 goals completed.</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Days Fully Done</div>
+            <div class="stat-value" id="statFullDays">0/30</div>
+            <div class="stat-meta">Days where all 3 goals were completed.</div>
+          </div>
+        </div>
+
+        <div class="section-card heatmap-card">
+          <div class="chart-card-title">Your 30 Days</div>
+          <div class="heatmap-grid" id="heatmapGrid"></div>
+          <div class="heatmap-legend">
+            <div class="legend-item"><span class="legend-swatch"></span><span>None</span></div>
+            <div class="legend-item"><span class="legend-swatch partial"></span><span>Partial</span></div>
+            <div class="legend-item"><span class="legend-swatch most"></span><span>Most</span></div>
+            <div class="legend-item"><span class="legend-swatch complete"></span><span>Complete</span></div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="chart-card-title">Weekly Goal Completion</div>
+          <div class="week-chart" id="weekChart"></div>
+        </div>
+
+        <div class="section-card today-card">
+          <div class="today-card-head">
+            <div>
+              <div class="quick-card-title">Today's Goals</div>
+              <div class="today-card-copy" id="todayCardLabel">Day 1 goals</div>
+            </div>
+            <button class="btn-send" type="button" onclick="openPlannerDay()">Open Day View</button>
+          </div>
+          <div class="quick-goals" id="todayGoalsCard"></div>
         </div>
       </div>
-
-      <div class="thin-progress">
-        <div class="thin-progress-fill" id="thinFill" style="width:3.3%"></div>
-      </div>
-
-      <div class="goals-area" id="goalsArea"></div>
-
-      <div class="today-pts-line">
-        <span id="dayProgressText">Day 1 of 30</span>
-      </div>
     </div>
 
-    <div class="journal-section" id="journalSection">
-      <div class="journal-label">Today's Notes</div>
-      <textarea class="journal-field" id="journalField" placeholder="How did today go? What did you do, feel, or notice..."></textarea>
-      <div class="journal-saved" id="journalSaved"></div>
-    </div>
+    <div class="tab-panel" id="plannerTab">
+      <div class="planner-section">
+        <div class="planner-header">
+          <div>
+            <div class="planner-title">Planner</div>
+            <div class="planner-head-copy">Use month, week, or day mode without losing your current progress.</div>
+          </div>
+        </div>
 
-    <div class="lockin-section" id="lockinSection">
-      <div class="lockin-eyebrow">Your Commitment</div>
-      <div class="lockin-title">Ready to lock in?</div>
-      <div class="commitment-quote" id="commitmentQuote">Loading...</div>
-      <div class="lockin-input-row">
-        <input class="lockin-field" id="lockinField" placeholder="Type &quot;I'm in&quot;" />
-        <button class="btn-lockin" onclick="handleLockin()">Lock In</button>
+        <div class="planner-view-toggle">
+          <button class="view-btn" id="plannerDayBtn" onclick="switchPlannerView('day')">Day</button>
+          <button class="view-btn active" id="plannerWeekBtn" onclick="switchPlannerView('week')">Week</button>
+          <button class="view-btn" id="plannerMonthBtn" onclick="switchPlannerView('month')">Month</button>
+        </div>
+
+        <div class="planner-view" id="plannerMonthView"></div>
+
+        <div class="planner-view active" id="plannerWeekView">
+          <div class="planner-nav">
+            <div class="planner-nav-copy">
+              <div class="planner-nav-label">Week View</div>
+              <div class="planner-nav-title" id="weekNavTitle">Week 1</div>
+            </div>
+            <div class="planner-nav-buttons">
+              <button class="nav-pill" id="prevWeekBtn" onclick="changePlannerWeek(-1)">← Previous Week</button>
+              <button class="nav-pill" id="nextWeekBtn" onclick="changePlannerWeek(1)">Next Week →</button>
+            </div>
+          </div>
+          <div class="week-grid" id="weekGrid"></div>
+        </div>
+
+        <div class="planner-view" id="plannerDayView">
+          <div class="day-section" id="daySection">
+            <div class="day-nav-top">
+              <div class="day-nav-info">
+                <div class="day-week-label" id="weekLabel">Week 1</div>
+                <div class="day-number-label" id="dayLabel">Day 1</div>
+              </div>
+              <div class="day-nav-buttons">
+                <button class="nav-pill" id="prevBtn" onclick="changeDay(-1)" disabled>← Previous Day</button>
+                <button class="nav-pill" id="nextBtn" onclick="changeDay(1)">Next Day →</button>
+              </div>
+            </div>
+
+            <div class="thin-progress">
+              <div class="thin-progress-fill" id="thinFill" style="width:3.3%"></div>
+            </div>
+
+            <div class="goals-area" id="goalsArea"></div>
+
+            <div class="today-pts-line">
+              <span id="dayProgressText">Day 1 of 30</span>
+            </div>
+
+            <div class="grace-wrap" id="graceWrap" style="display:none;">
+              <button class="grace-btn" id="graceBtn" type="button" onclick="useGraceToken()">Use Grace Token</button>
+              <div class="grace-badge" id="graceDayBadge" style="display:none;">Grace day ✓</div>
+              <div class="grace-copy" id="graceCopy"></div>
+            </div>
+          </div>
+
+          <div class="journal-section" id="journalSection">
+            <div class="journal-label">Today's Notes</div>
+            <textarea class="journal-field" id="journalField" placeholder="How did today go? What did you do, feel, or notice..."></textarea>
+            <div class="journal-saved" id="journalSaved"></div>
+          </div>
+
+          <div class="lockin-section" id="lockinSection">
+            <div class="lockin-eyebrow">Your Commitment</div>
+            <div class="lockin-title">Ready to lock in?</div>
+            <div class="commitment-quote" id="commitmentQuote">Loading...</div>
+            <div class="lockin-input-row">
+              <input class="lockin-field" id="lockinField" placeholder="Type &quot;I'm in&quot;" />
+              <button class="btn-lockin" onclick="handleLockin()">Lock In</button>
+            </div>
+            <div class="locked-msg" id="lockedMsg">✓ You're locked in. Day 1 starts now.</div>
+          </div>
+
+          <div class="support-section" id="supportSection">
+            <div class="support-label">Support</div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-row">
+              <input class="chat-field" id="chatField" placeholder="Ask anything about your plan..." onkeydown="if(event.key==='Enter') sendChat()"/>
+              <button class="btn-send" id="sendBtn" onclick="sendChat()">Send</button>
+            </div>
+            <div class="support-note" id="supportNote"></div>
+          </div>
+        </div>
       </div>
-      <div class="locked-msg" id="lockedMsg">✓ You're locked in. Day 1 starts now.</div>
-    </div>
-
-    <div class="support-section" id="supportSection">
-      <div class="support-label">Support</div>
-      <div class="chat-messages" id="chatMessages"></div>
-      <div class="chat-input-row">
-        <input class="chat-field" id="chatField" placeholder="Ask anything about your plan..." onkeydown="if(event.key==='Enter') sendChat()"/>
-        <button class="btn-send" id="sendBtn" onclick="sendChat()">Send</button>
-      </div>
-      <div class="support-note" id="supportNote"></div>
-    </div>
-
-    <div class="reset-line">
-      <button class="btn-reset" onclick="resetApp()">Start over</button>
     </div>
 
     <div class="site-footer">
@@ -1013,10 +1784,13 @@
   let currentQ     = 0;
   let visibleQs    = [];
   let planDays     = [];
-  let progress     = { currentDay: 0, totalPoints: 0, dayData: {} };
+  let progress     = { currentDay: 0, totalPoints: 0, dayData: {}, graceTokens: 2 };
   let planContext  = '';
   let chatHistory  = [];
   let supportUsed  = 0;
+  let activePlanTab = 'dashboard';
+  let plannerView   = 'week';
+  const STARTING_GRACE_TOKENS = 2;
   const MAX_SUPPORT = 1;
 
   // ── BOOT ──
@@ -1034,7 +1808,10 @@
       if (!d.planDays || d.planDays.length !== 30) return false;
       planDays    = d.planDays;
       progress    = d.progress || { currentDay:0, totalPoints:0, dayData:{} };
+      if (typeof progress.graceTokens !== 'number') progress.graceTokens = STARTING_GRACE_TOKENS;
       planContext  = d.planContext || '';
+      activePlanTab = d.activePlanTab || 'dashboard';
+      plannerView   = d.plannerView || 'week';
       document.getElementById('dxTitle').textContent         = d.diagnosisTitle || '';
       document.getElementById('dxText').textContent          = d.diagnosisText  || '';
       document.getElementById('commitmentQuote').textContent = d.commitmentStatement || '';
@@ -1054,6 +1831,7 @@
     try {
       const base = {
         planDays, progress, planContext,
+        activePlanTab, plannerView,
         diagnosisTitle:      document.getElementById('dxTitle').textContent,
         diagnosisText:       document.getElementById('dxText').textContent,
         commitmentStatement: document.getElementById('commitmentQuote').textContent,
@@ -1223,8 +2001,10 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
       const parsed = parseJSON(raw);
 
       planDays    = buildPlanDays(parsed);
-      progress    = { currentDay:0, totalPoints:0, dayData:{} };
+      progress    = { currentDay:0, totalPoints:0, dayData:{}, graceTokens: STARTING_GRACE_TOKENS };
       planContext  = `User: ${name}, Habit: ${habit}. Plan themes: ${parsed.week1Title}, ${parsed.week2Title}, ${parsed.week3Title}, ${parsed.week4Title}.`;
+      activePlanTab = 'dashboard';
+      plannerView = 'week';
 
       document.getElementById('dxTitle').textContent         = parsed.diagnosisTitle || 'Your Habit Pattern';
       document.getElementById('dxText').textContent          = parsed.diagnosisText  || '';
@@ -1249,7 +2029,7 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     document.getElementById('loadingScreen').style.display    = 'none';
     document.getElementById('planScreen').style.display       = 'block';
     document.getElementById('pointsBadge').style.display      = 'flex';
-    renderDay(progress.currentDay);
+    renderPlanUI();
     updatePointsUI();
   }
 
@@ -1305,11 +2085,15 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
 
   function buildPlanDays(parsed) {
     const days = [];
+    const w1 = parsed.w1 || parsed.week1Goals || [];
+    const w2 = parsed.w2 || parsed.week2Goals || [];
+    const w3 = parsed.w3 || parsed.week3Goals || [];
+    const w4 = parsed.w4 || parsed.week4Goals || [];
     const weeks = [
-      { num:1, title: parsed.week1Title||'Week 1', goals: parsed.w1||[] },
-      { num:2, title: parsed.week2Title||'Week 2', goals: parsed.w2||[] },
-      { num:3, title: parsed.week3Title||'Week 3', goals: parsed.w3||[] },
-      { num:4, title: parsed.week4Title||'Week 4', goals: parsed.w4||[] },
+      { num:1, title: parsed.week1Title||'Week 1', goals: w1 },
+      { num:2, title: parsed.week2Title||'Week 2', goals: w2 },
+      { num:3, title: parsed.week3Title||'Week 3', goals: w3 },
+      { num:4, title: parsed.week4Title||'Week 4', goals: w4 },
     ];
     function clean(s) { return (s||'').replace(/^Day\d+\s*/i,'').trim(); }
 
@@ -1344,11 +2128,276 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     return days;
   }
 
+  function getDayState(dayIndex) {
+    const data = progress.dayData[dayIndex];
+    return data || { completed:[false,false,false], points:0, graceUsed:false };
+  }
+
+  function getCompletedCount(dayIndex) {
+    return getDayState(dayIndex).completed.filter(Boolean).length;
+  }
+
+  function isGraceProtected(dayIndex) {
+    return getDayState(dayIndex).graceUsed === true;
+  }
+
+  function isGraceEligible(dayIndex) {
+    return progress.graceTokens > 0
+      && dayIndex < progress.currentDay
+      && getCompletedCount(dayIndex) === 0
+      && !isGraceProtected(dayIndex);
+  }
+
+  function getDayStatus(dayIndex) {
+    const completed = getCompletedCount(dayIndex);
+    if (completed === 3) return 'full';
+    if (completed > 0) return 'partial';
+    return 'empty';
+  }
+
+  function getCurrentWeekStart() {
+    return Math.floor(progress.currentDay / 7) * 7;
+  }
+
+  function getWeekDays(startIndex = getCurrentWeekStart()) {
+    const end = Math.min(startIndex + 7, planDays.length);
+    const days = [];
+    for (let i = startIndex; i < end; i++) days.push({ index: i, plan: planDays[i] });
+    return days;
+  }
+
+  function getDashboardStats() {
+    let fullDays = 0;
+    let touchedDays = 0;
+    let goalsDone = 0;
+    Object.keys(progress.dayData).forEach((key) => {
+      const idx = Number(key);
+      if (!planDays[idx]) return;
+      const completed = getCompletedCount(idx);
+      touchedDays++;
+      goalsDone += completed;
+      if (completed === 3) fullDays++;
+    });
+
+    let streak = 0;
+    for (let i = progress.currentDay; i >= 0; i--) {
+      if (getCompletedCount(i) === 3 || isGraceProtected(i)) streak++;
+      else break;
+    }
+
+    const totalPossible = touchedDays * 3;
+    const completionRate = totalPossible ? Math.round((goalsDone / totalPossible) * 100) : 0;
+    return { fullDays, touchedDays, goalsDone, totalPossible, completionRate, streak };
+  }
+
+  function renderPlanUI() {
+    if (!planDays.length) return;
+    updateTabUI();
+    updatePlannerViewButtons();
+    renderDashboard();
+    renderPlanner();
+    renderDay(progress.currentDay);
+  }
+
+  function updateTabUI() {
+    const dashboardActive = activePlanTab === 'dashboard';
+    document.getElementById('dashboardTabBtn').classList.toggle('active', dashboardActive);
+    document.getElementById('plannerTabBtn').classList.toggle('active', !dashboardActive);
+    document.getElementById('dashboardTab').classList.toggle('active', dashboardActive);
+    document.getElementById('plannerTab').classList.toggle('active', !dashboardActive);
+  }
+
+  function updatePlannerViewButtons() {
+    ['month', 'week', 'day'].forEach((view) => {
+      const btn = document.getElementById(`planner${view[0].toUpperCase()}${view.slice(1)}Btn`);
+      const panel = document.getElementById(`planner${view[0].toUpperCase()}${view.slice(1)}View`);
+      if (btn) btn.classList.toggle('active', plannerView === view);
+      if (panel) panel.classList.toggle('active', plannerView === view);
+    });
+  }
+
+  function switchPlanTab(tab) {
+    const previousTab = activePlanTab;
+    activePlanTab = tab;
+    if (tab === 'planner' && previousTab !== 'planner') plannerView = 'week';
+    updateTabUI();
+    if (tab === 'planner') updatePlannerViewButtons();
+    if (tab === 'planner' && plannerView === 'day') renderDay(progress.currentDay);
+    saveProgress();
+  }
+
+  function switchPlannerView(view) {
+    plannerView = view;
+    updatePlannerViewButtons();
+    if (view === 'month') renderMonthView();
+    if (view === 'week') renderWeekView();
+    if (view === 'day') renderDay(progress.currentDay);
+    saveProgress();
+  }
+
+  function openPlannerDay(dayIndex = progress.currentDay) {
+    progress.currentDay = dayIndex;
+    activePlanTab = 'planner';
+    plannerView = 'day';
+    renderPlanUI();
+    saveProgress();
+    document.getElementById('plannerDayView').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  function renderDashboard() {
+    const stats = getDashboardStats();
+    const weekStart = getCurrentWeekStart();
+    const weekNumber = Math.floor(weekStart / 7) + 1;
+    document.getElementById('dashboardWeekLabel').textContent = `Days ${weekStart + 1}-${Math.min(weekStart + 7, 30)} · Week ${weekNumber}`;
+    document.getElementById('statStreak').textContent = stats.streak;
+    document.getElementById('statPoints').textContent = progress.totalPoints;
+    document.getElementById('statCompletionRate').textContent = `${stats.completionRate}%`;
+    document.getElementById('statCompletionMeta').textContent = `${stats.goalsDone} of ${stats.totalPossible || 0} goals completed.`;
+    document.getElementById('statFullDays').textContent = `${stats.fullDays}/30`;
+    document.getElementById('graceBadge').textContent = `${progress.graceTokens} Grace Token${progress.graceTokens === 1 ? '' : 's'} remaining`;
+    document.getElementById('graceBadge').style.display = progress.graceTokens > 0 ? 'inline-flex' : 'none';
+    renderHeatmap();
+    renderWeekChart(weekStart);
+    renderTodayGoalsCard();
+  }
+
+  function getHeatmapLevel(dayIndex) {
+    const completed = getCompletedCount(dayIndex);
+    if (completed === 3) return 'complete';
+    if (completed === 2) return 'most';
+    if (completed === 1) return 'partial';
+    return 'none';
+  }
+
+  function renderHeatmap() {
+    const grid = document.getElementById('heatmapGrid');
+    grid.innerHTML = '';
+    for (let i = 0; i < planDays.length; i++) {
+      const square = document.createElement('button');
+      square.type = 'button';
+      square.className = `heatmap-day${i === progress.currentDay ? ' active' : ''}`;
+      square.dataset.level = getHeatmapLevel(i);
+      square.textContent = i + 1;
+      square.addEventListener('click', () => openPlannerDay(i));
+      grid.appendChild(square);
+    }
+  }
+
+  function renderWeekChart(startIndex) {
+    const chart = document.getElementById('weekChart');
+    chart.innerHTML = '';
+    getWeekDays(startIndex).forEach(({ index }) => {
+      const completed = getCompletedCount(index);
+      const bar = document.createElement('div');
+      bar.className = 'chart-col';
+      bar.innerHTML = `
+        <div class="chart-score">${completed}/3</div>
+        <div class="chart-bar-wrap">
+          <div class="chart-bar" data-level="${getDayStatus(index)}" style="height:${Math.max((completed / 3) * 120, 10)}px"></div>
+        </div>
+        <div class="chart-day">Day ${index + 1}</div>`;
+      chart.appendChild(bar);
+    });
+  }
+
+  function renderTodayGoalsCard() {
+    const card = document.getElementById('todayGoalsCard');
+    const label = document.getElementById('todayCardLabel');
+    const dayNum = progress.currentDay + 1;
+    label.textContent = `Day ${dayNum} · ${planDays[progress.currentDay].weekTitle}`;
+    card.innerHTML = '';
+    planDays[progress.currentDay].goals.forEach((goal, goalIndex) => {
+      const done = getDayState(progress.currentDay).completed[goalIndex] || false;
+      const row = document.createElement('div');
+      row.className = `quick-goal-row${done ? ' done' : ''}`;
+      row.innerHTML = `<div class="quick-goal-check">${done ? '✓' : ''}</div><div class="quick-goal-text">${goal}</div>`;
+      row.addEventListener('click', () => toggleGoal(progress.currentDay, goalIndex));
+      card.appendChild(row);
+    });
+  }
+
+  function renderPlanner() {
+    renderMonthView();
+    renderWeekView();
+  }
+
+  function renderMonthView() {
+    const month = document.getElementById('plannerMonthView');
+    month.innerHTML = '<div class="month-grid" id="monthGrid"></div>';
+    const grid = document.getElementById('monthGrid');
+    for (let i = 0; i < planDays.length; i++) {
+      const cell = document.createElement('button');
+      cell.className = `month-cell${i === progress.currentDay ? ' active' : ''}`;
+      cell.type = 'button';
+      cell.innerHTML = `
+        <div class="month-day-num">Day ${i + 1}</div>
+        <div class="month-status ${getDayStatus(i)}"></div>`;
+      cell.addEventListener('click', () => {
+        progress.currentDay = i;
+        activePlanTab = 'planner';
+        plannerView = 'day';
+        renderPlanUI();
+        saveProgress();
+      });
+      grid.appendChild(cell);
+    }
+  }
+
+  function renderWeekView() {
+    const weekStart = getCurrentWeekStart();
+    const weekEnd = Math.min(weekStart + 7, 30);
+    const weekTitle = planDays[weekStart] ? `${planDays[weekStart].weekTitle} · Week ${planDays[weekStart].weekNum}` : 'Week';
+    document.getElementById('weekNavTitle').textContent = `${weekTitle} · Days ${weekStart + 1}-${weekEnd}`;
+    document.getElementById('prevWeekBtn').disabled = weekStart === 0;
+    document.getElementById('nextWeekBtn').disabled = weekStart >= 28;
+
+    const weekGrid = document.getElementById('weekGrid');
+    weekGrid.innerHTML = '';
+    getWeekDays(weekStart).forEach(({ index, plan }) => {
+      const state = getDayState(index);
+      const card = document.createElement('div');
+      card.className = 'week-card';
+      const goalsHtml = plan.goals.map((goal, goalIndex) => {
+        const done = state.completed[goalIndex] || false;
+        return `<div class="week-goal-row${done ? ' done' : ''}" data-day-index="${index}" data-goal-index="${goalIndex}">
+          <div class="week-goal-check">${done ? '✓' : ''}</div>
+          <div class="week-goal-text">${goal}</div>
+        </div>`;
+      }).join('');
+      card.innerHTML = `
+        <div class="week-card-header">
+          <div>
+            <div class="week-card-title">Day ${index + 1}</div>
+            <div class="week-card-sub">${plan.weekTitle} · Week ${plan.weekNum}</div>
+          </div>
+          <button class="btn-send" type="button" data-open-day="${index}">Open</button>
+        </div>
+        <div class="week-goals">${goalsHtml}</div>`;
+      card.querySelectorAll('.week-goal-row').forEach((row) => {
+        row.addEventListener('click', () => toggleGoal(Number(row.dataset.dayIndex), Number(row.dataset.goalIndex)));
+      });
+      card.querySelector('[data-open-day]').addEventListener('click', (event) => {
+        event.stopPropagation();
+        openPlannerDay(index);
+      });
+      weekGrid.appendChild(card);
+    });
+  }
+
+  function changePlannerWeek(dir) {
+    const next = progress.currentDay + dir * 7;
+    if (next < 0 || next > 29) return;
+    progress.currentDay = next;
+    renderPlanUI();
+    saveProgress();
+  }
+
   // ── RENDER DAY ──
   function renderDay(index) {
     if (!planDays[index]) return;
     const day    = planDays[index];
     const dayNum = index + 1;
+    progress.currentDay = index;
 
     document.getElementById('weekLabel').textContent      = `${day.weekTitle} · Week ${day.weekNum}`;
     document.getElementById('dayLabel').textContent       = `Day ${dayNum}`;
@@ -1366,7 +2415,7 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     jField.oninput = () => {
       clearTimeout(jField._timer);
       jField._timer = setTimeout(() => {
-        if (!progress.dayData[index]) progress.dayData[index] = { completed:[false,false,false], points:0 };
+        if (!progress.dayData[index]) progress.dayData[index] = { completed:[false,false,false], points:0, graceUsed:false };
         progress.dayData[index].journal = jField.value;
         saveProgress();
         jSaved.textContent = 'Saved ✓';
@@ -1374,7 +2423,7 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
       }, 800);
     };
 
-    const saved = progress.dayData[index] || { completed:[false,false,false], points:0 };
+    const saved = getDayState(index);
     const area  = document.getElementById('goalsArea');
     area.innerHTML = '';
 
@@ -1392,12 +2441,44 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
       area.appendChild(row);
     });
 
+    renderGraceUI(index);
 
+
+  }
+
+  function renderGraceUI(dayIndex) {
+    const wrap = document.getElementById('graceWrap');
+    const btn = document.getElementById('graceBtn');
+    const badge = document.getElementById('graceDayBadge');
+    const copy = document.getElementById('graceCopy');
+    const protectedDay = isGraceProtected(dayIndex);
+    const eligible = isGraceEligible(dayIndex);
+
+    wrap.style.display = (protectedDay || eligible) ? 'flex' : 'none';
+    btn.style.display = eligible ? 'inline-flex' : 'none';
+    badge.style.display = protectedDay ? 'inline-flex' : 'none';
+    copy.textContent = protectedDay
+      ? 'This missed day is protected and will not break your streak.'
+      : eligible
+        ? `Protect this missed day. ${progress.graceTokens} token${progress.graceTokens === 1 ? '' : 's'} left.`
+        : '';
+  }
+
+  function useGraceToken() {
+    const dayIndex = progress.currentDay;
+    if (!isGraceEligible(dayIndex)) return;
+    if (!progress.dayData[dayIndex]) {
+      progress.dayData[dayIndex] = { completed:[false,false,false], points:0, graceUsed:false };
+    }
+    progress.dayData[dayIndex].graceUsed = true;
+    progress.graceTokens = Math.max(0, progress.graceTokens - 1);
+    renderPlanUI();
+    saveProgress();
   }
 
   function toggleGoal(dayIndex, goalIndex) {
     if (!progress.dayData[dayIndex])
-      progress.dayData[dayIndex] = { completed:[false,false,false], points:0 };
+      progress.dayData[dayIndex] = { completed:[false,false,false], points:0, graceUsed:false };
     const d   = progress.dayData[dayIndex];
     const was = d.completed[goalIndex];
     d.completed[goalIndex] = !was;
@@ -1405,7 +2486,7 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     if (progress.totalPoints < 0) progress.totalPoints = 0;
     d.points = d.completed.filter(Boolean).length * 5;
     updatePointsUI();
-    renderDay(dayIndex);
+    renderPlanUI();
     saveProgress();
   }
 
@@ -1422,7 +2503,7 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     const next = progress.currentDay + dir;
     if (next < 0 || next > 29) return;
     progress.currentDay = next;
-    renderDay(next);
+    renderPlanUI();
     saveProgress();
     document.getElementById('daySection').scrollIntoView({ behavior:'smooth', block:'start' });
   }
@@ -1456,6 +2537,9 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     if (r <= 0) {
       document.getElementById('chatField').disabled = true;
       document.getElementById('sendBtn').disabled   = true;
+    } else {
+      document.getElementById('chatField').disabled = false;
+      document.getElementById('sendBtn').disabled   = false;
     }
   }
 
@@ -1513,7 +2597,8 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
   function resetApp() {
     if (!confirm('This will clear your progress and start over. Are you sure?')) return;
     localStorage.removeItem(STORAGE_KEY);
-    answers={}; planDays=[]; progress={currentDay:0,totalPoints:0,dayData:{}}; chatHistory=[]; supportUsed=0; planContext='';
+    answers={}; planDays=[]; progress={currentDay:0,totalPoints:0,dayData:{},graceTokens:STARTING_GRACE_TOKENS}; chatHistory=[]; supportUsed=0; planContext='';
+    activePlanTab='dashboard'; plannerView='week';
     document.getElementById('planScreen').style.display      = 'none';
     document.getElementById('interviewScreen').style.display = 'none';
     document.getElementById('landingScreen').style.display   = 'block';
@@ -1524,6 +2609,10 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     document.getElementById('lockinField').value             = '';
     document.querySelector('.btn-lockin').disabled           = false;
     document.getElementById('chatMessages').innerHTML        = '';
+    document.getElementById('chatField').disabled            = false;
+    document.getElementById('chatField').value               = '';
+    document.getElementById('sendBtn').disabled              = false;
+    document.getElementById('supportNote').textContent       = '';
     document.getElementById('supportSection').style.display  = 'none';
     window.scrollTo({ top:0, behavior:'smooth' });
   }
@@ -1554,8 +2643,10 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
     };
 
     planDays   = buildPlanDays(parsed);
-    progress   = { currentDay: 0, totalPoints: 0, dayData: {} };
+    progress   = { currentDay: 0, totalPoints: 0, dayData: {}, graceTokens: STARTING_GRACE_TOKENS };
     planContext = 'Demo user. Habit: phone/social media.';
+    activePlanTab = 'dashboard';
+    plannerView = 'week';
 
     document.getElementById('dxTitle').textContent         = parsed.diagnosisTitle;
     document.getElementById('dxText').textContent          = parsed.diagnosisText;
@@ -1563,6 +2654,7 @@ Each w1/w2/w3/w4 = exactly 12 UNIQUE strings. Each string MAX 5 WORDS. No day la
 
     showPlanScreen();
     document.getElementById('headerPoints').textContent = '0';
+    saveProgress();
   }
 
   init();
